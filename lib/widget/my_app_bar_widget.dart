@@ -4,9 +4,9 @@ import 'package:uberAir/widget/my_side_bar_menu_widget.dart';
 class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    
     return Padding(
-      padding: const EdgeInsets.only(top:16.0),
+      padding: const EdgeInsets.only(top:16.0,bottom: 16.0),
       
       child: Row(
 

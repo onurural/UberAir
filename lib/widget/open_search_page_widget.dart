@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class OpenPaymentPage extends StatelessWidget {
+
+class OpenSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Payment"),
+        title: Text("Flights"),
       ),
     );
   }

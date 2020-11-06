@@ -4,36 +4,35 @@ import 'my_app_bar_widget.dart';
 import 'open_airports_widget.dart';
 import 'open_calender_widget.dart';
 import 'open_passenger_list_widget.dart';
-import 'open_payment_page_widget.dart';
+import 'open_search_page_widget.dart';
+import 'search_airports.dart';
 
 class MyFlightInfoField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return (Container(
-      
       padding: EdgeInsets.all(20),
       child: Column(
         children: [
           MyAppBar(),
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
               FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OpenCalender()));
                 },
-                child: Text("Departure",style: TextStyle(color:Colors.amberAccent)),
+                child: Text("Departure",
+                    style: TextStyle(color: Colors.amberAccent)),
               ),
               FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OpenCalender()));
                 },
-                child: Text("Return",style: TextStyle(color:Colors.amberAccent)),
+                child:
+                    Text("Return", style: TextStyle(color: Colors.amberAccent)),
               )
             ],
           ),
@@ -46,18 +45,18 @@ class MyFlightInfoField extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => OpenCalender()));
                 },
                 child: Text(
-                  "01\nOCAK\n2020",
+                  "01\nJANUARY\n2020",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
               ),
-              Icon(Icons.calendar_today,color: Colors.amberAccent),
+              Icon(Icons.calendar_today, color: Colors.amberAccent),
               FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OpenCalender()));
                 },
                 child: Text(
-                  "01\nŞUBAT\n2020",
+                  "01\nFEBRUARY\n2020",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -86,14 +85,16 @@ class MyFlightInfoField extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OpenAirPorts()));
                 },
-                child: Text("From",style: TextStyle(color:Colors.amberAccent),),
+                child: Text(
+                  "From",
+                  style: TextStyle(color: Colors.amberAccent),
+                ),
               ),
               FlatButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OpenAirPorts()));
+                  showSearch(context: context, delegate: SearchAirports());
                 },
-                child: Text("To",style: TextStyle(color:Colors.amberAccent)),
+                child: Text("To", style: TextStyle(color: Colors.amberAccent)),
               ),
             ],
           ),
@@ -105,59 +106,59 @@ class MyFlightInfoField extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OpenAirPorts()));
                 },
-              child:Text(
-                "IST ",
-                style: TextStyle(fontSize: 48,fontWeight: FontWeight.w400),
+                child: Text(
+                  "IST ",
+                  style: TextStyle(fontSize: 48, fontWeight: FontWeight.w400),
+                ),
               ),
+              Icon(
+                Icons.flight,
+                color: Colors.amberAccent,
               ),
-              Icon(Icons.flight,color: Colors.amberAccent,),
               FlatButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OpenAirPorts()));
                 },
-              child:Text(
-                "ADB",
-                style: TextStyle(fontSize: 48,fontWeight: FontWeight.w400),
-              ),
+                child: Text(
+                  "ADB",
+                  style: TextStyle(fontSize: 48, fontWeight: FontWeight.w400),
+                ),
               ),
             ],
           ),
           Divider(
-                  thickness: 1,
-                  color: Colors.amberAccent,
-                ),
-                FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OpenPassengerList()));
-                },
-                
-        
+            thickness: 1,
+            color: Colors.amberAccent,
+          ),
+          FlatButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => OpenPassengerList()));
+            },
             child: ListTile(
-              leading: Icon(Icons.person,color: Colors.amberAccent,),
-              title: Text('2 Student',style:TextStyle(fontWeight: FontWeight.w400,fontSize: 20)),
-       
+              leading: Icon(
+                Icons.person,
+                color: Colors.amberAccent,
+              ),
+              title: Text('2 Student',
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
             ),
-            
-          
-        ),
-      
-               
-              
-              TextButton(
-                  child: const Text('BUY  TICKET',style: TextStyle(
-                    color: Colors.amberAccent,
-                    fontSize: 20,
-                    ),),
-                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OpenPaymentPage()));
-                },
-                ),
+          ),
+          TextButton(
+            child: const Text(
+              'SEARCH',
+              style: TextStyle(
+                color: Colors.amberAccent,
+                fontSize: 20,
+              ),
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => OpenSearchPage()));
+            },
+          ),
         ],
-
-        
       ),
     ));
   }
