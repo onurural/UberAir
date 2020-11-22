@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:uberAir/view_model/passenger_list_view_model.dart';
 
 import 'api/airport_api_client.dart';
 import 'view_model/airport_view_model.dart';
@@ -11,4 +12,6 @@ void setUpLocator() {
   // locator.registerLazySingleton(() => AirportRepository());
   locator.registerLazySingleton(() => AirportApiClient());
   locator.registerFactory(() => AirportViewModel());
+  locator.registerFactory(() => ItemViewModel());
+
 }

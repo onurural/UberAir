@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/locator.dart';
+import 'package:uberAir/view_model/passenger_list_view_model.dart';
 import 'view_model/airport_view_model.dart';
 import 'widget/uberAir_widget.dart';
 
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
           home: UberAir()),
       providers: [
         ChangeNotifierProvider<AirportViewModel>(
-            create: (_) => AirportViewModel())
+            create: (context) => locator<AirportViewModel>()),
+        ChangeNotifierProvider<ItemViewModel>(
+          create: (context) => locator<ItemViewModel>())
       ],
     );
   }

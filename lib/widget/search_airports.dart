@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:uberAir/models/airport.dart';
-import 'package:uberAir/models/places.dart';
 import 'package:uberAir/view_model/airport_view_model.dart';
 
 class SearchAirports extends SearchDelegate<Airport> {
@@ -29,61 +27,86 @@ class SearchAirports extends SearchDelegate<Airport> {
 
   @override
   Widget buildResults(BuildContext context) {
-     return Consumer<AirportViewModel>(
+    return Consumer<AirportViewModel>(
         builder: (context, airportViewModel, child) {
-      Future<Place> airportList;
-      airportList = airportViewModel.fetchAirport(query);
-      return FutureBuilder<Place>(
+      Future<Airport> airportList;
+      airportList = airportViewModel.getAirport(query);
+      return FutureBuilder<Airport>(
           future: airportList,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView(
-                children: [
-                  ListTile(
-                    title: Text(snapshot.data.placeId),
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data == null) {
+                return Center(
+                  child: Text("Data = null"),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data.places.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(
+                        snapshot.data.places[index].placeId != null
+                            ? snapshot.data.places[index].placeId
+                            : "NULL",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(snapshot.data.places[index].countryId +
+                          "   " +
+                          snapshot.data.places[index].placeName),
+                      trailing:
+                          Icon(Icons.flight_takeoff, color: Colors.blueAccent),
+                    );
+                  },
+                );
+              }
+            } else if (snapshot.connectionState == ConnectionState.none) {
               return Center(child: Text(snapshot.error));
+            } else {
+              return Center(child: CircularProgressIndicator());
             }
-            return CircularProgressIndicator();
           });
     });
-    // ListView.builder(
-    //     itemCount: _places.length,
-    //     itemBuilder: (context, index) {
-    //       return Card(
-    //         child: Padding(
-    //           padding: const EdgeInsets.all(8.0),
-    //           child: Column(
-    //               children: [Text(_places[index].placeId), Text("text")]),
-    //         ),
-    //       );
-    //     });
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     return Consumer<AirportViewModel>(
         builder: (context, airportViewModel, child) {
-      Future<Place> airportList;
-      airportList = airportViewModel.fetchAirport(query);
-      return FutureBuilder<Place> (
+      Future<Airport> airportList;
+      airportList = airportViewModel.getAirport(query);
+      return FutureBuilder<Airport>(
           future: airportList,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView(
-                children: [
-                  ListTile(
-                    title: Text(snapshot.data.placeId),
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data == null) {
+                return Center(
+                  child: Text("Data = null"),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data.places.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(
+                        snapshot.data.places[index].placeId != null
+                            ? snapshot.data.places[index].placeId
+                            : "NULL",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(snapshot.data.places[index].countryId +
+                          "   " +
+                          snapshot.data.places[index].placeName),
+                      trailing:
+                          Icon(Icons.flight_takeoff, color: Colors.blueAccent),
+                    );
+                  },
+                );
+              }
+            } else if (snapshot.connectionState == ConnectionState.none) {
               return Center(child: Text(snapshot.error));
+            } else {
+              return Center(child: CircularProgressIndicator());
             }
-            return CircularProgressIndicator();
           });
     });
   }

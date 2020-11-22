@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:uberAir/api/airport_api_client.dart';
-import 'package:uberAir/models/places.dart';
+import 'package:uberAir/models/airport.dart';
 import '../locator.dart';
 enum AirportState {
   InitialAirportState,
@@ -16,13 +16,14 @@ class AirportViewModel with ChangeNotifier {
   }
   // AirportRepository _airportRepository = locator<AirportRepository>();
   AirportState _state;
-  Place _airportList;
+  Airport _airportList;
     set state(AirportState value) {
     _state = value;
     notifyListeners();
   }
   AirportState getState() => _state;
-   Future fetchAirport(String city) async {
+
+ Future<Airport>getAirport(String city) async {
     try {
        _state = AirportState.LoadingAirportState;
       this._airportList = await _airportApiClient.fetchAirport(city);
@@ -33,32 +34,4 @@ class AirportViewModel with ChangeNotifier {
    
     return _airportList;
   }
-
-  // AirportRepository airportRepository = locator<AirportRepository>();
-  // Place placeList;
-  // Airport airport;
-  // AirportState _state;
-
-  // AirportViewModel() {
-  //   Future
-  //   airport = Airport();
-  //   state = AirportState.InitialAirportState;
-  // }
-
-  // AirportState get state => _state;
-
-
-
-  // Future airportFetch(String placeName) async {
-  //   try {
-  //     state = AirportState.LoadingAirportState;
-  //     placeList = await airportRepository.getAirport(placeName);
-  //     state = AirportState.LoadedAirportState;
-
-  //   } catch (e) {
-  //     state = AirportState.ErrorAirportState;
-
-  //   }
-  //   return placeList;
-  // }
 }

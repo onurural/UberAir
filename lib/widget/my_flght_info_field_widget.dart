@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'my_app_bar_widget.dart';
-import 'open_airports_widget.dart';
 import 'open_calender_widget.dart';
 import 'open_passenger_list_widget.dart';
 import 'open_search_page_widget.dart';
@@ -81,9 +80,8 @@ class MyFlightInfoField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OpenAirPorts()));
+               onPressed: () {
+                  showSearch(context: context, delegate: SearchAirports());
                 },
                 child: Text(
                   "From",
@@ -103,8 +101,7 @@ class MyFlightInfoField extends StatelessWidget {
             children: [
               FlatButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OpenAirPorts()));
+                  showSearch(context: context, delegate: SearchAirports());
                 },
                 child: Text(
                   "IST ",
@@ -116,9 +113,8 @@ class MyFlightInfoField extends StatelessWidget {
                 color: Colors.amberAccent,
               ),
               FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OpenAirPorts()));
+               onPressed: () {
+                  showSearch(context: context, delegate: SearchAirports());
                 },
                 child: Text(
                   "ADB",
