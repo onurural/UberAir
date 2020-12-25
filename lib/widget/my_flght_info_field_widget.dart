@@ -8,7 +8,7 @@ import 'open_search_page_widget.dart';
 import 'search_airports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyFlightInfoField extends StatelessWidget with ChangeNotifier {
+class MyFlightInfoField extends StatelessWidget  {
   MyFlightInfoField();
 
   @override
@@ -164,7 +164,7 @@ class MyFlightInfoField extends StatelessWidget with ChangeNotifier {
                     builder: (context) => OpenPassengerList(),
                   ),
                 );
-                notifyListeners();
+              
                 // String s;
                 debugPrint("Home Screen : ${list["Adult"]}");
                 for (Object value in list.keys) {

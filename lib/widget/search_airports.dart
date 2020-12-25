@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:uberAir/models/airport.dart';
 import 'package:uberAir/models/places.dart';
 import 'package:uberAir/view_model/airport_view_model.dart';
-import 'package:uberAir/widget/my_flght_info_field_widget.dart';
 
 class SearchAirports extends SearchDelegate<Place> {
   @override
