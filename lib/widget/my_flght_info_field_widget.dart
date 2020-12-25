@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:uberAir/view_model/search_view_model.dart';
 import 'my_app_bar_widget.dart';
 import 'open_calender_widget.dart';
 import 'open_passenger_list_widget.dart';
 import 'open_search_page_widget.dart';
 import 'search_airports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyFlightInfoField extends StatelessWidget {
+class MyFlightInfoField extends StatelessWidget with ChangeNotifier {
+  MyFlightInfoField();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, int> list = Map();
     return (Container(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -80,7 +85,7 @@ class MyFlightInfoField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FlatButton(
-               onPressed: () {
+                onPressed: () {
                   showSearch(context: context, delegate: SearchAirports());
                 },
                 child: Text(
@@ -99,28 +104,52 @@ class MyFlightInfoField extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              FlatButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: SearchAirports());
-                },
-                child: Text(
-                  "IST ",
-                  style: TextStyle(fontSize: 48, fontWeight: FontWeight.w400),
-                ),
-              ),
+              Consumer<SearchViewModel>(builder: (context, item, child) {
+                return FlatButton(
+                  onPressed: () {
+                    item.searchNPrintResultFrom(
+                      context,
+                    );
+                  },
+                  child: FutureBuilder<String>(
+                    future: _readFromAirportID(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      return Text(
+                        snapshot.data != null
+                            ? snapshot.data
+                            : "Select Airport",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w400),
+                      );
+                    },
+                  ),
+                );
+              }),
               Icon(
                 Icons.flight,
                 color: Colors.amberAccent,
               ),
-              FlatButton(
-               onPressed: () {
-                  showSearch(context: context, delegate: SearchAirports());
-                },
-                child: Text(
-                  "ADB",
-                  style: TextStyle(fontSize: 48, fontWeight: FontWeight.w400),
-                ),
-              ),
+              Consumer<SearchViewModel>(builder: (context, item, child) {
+                return FlatButton(
+                  onPressed: () {
+                    item.searchNPrintResultTo(
+                      context,
+                    );
+                  },
+                  child: FutureBuilder<String>(
+                    future: _readToAirportID(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      return Text(
+                        snapshot.data != null
+                            ? snapshot.data
+                            : "Select Airport",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w400),
+                      );
+                    },
+                  ),
+                );
+              })
             ],
           ),
           Divider(
@@ -128,21 +157,49 @@ class MyFlightInfoField extends StatelessWidget {
             color: Colors.amberAccent,
           ),
           FlatButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => OpenPassengerList()));
-            },
-            child: ListTile(
-              leading: Icon(
-                Icons.person,
-                color: Colors.amberAccent,
-              ),
-              title: Text('2 Student',
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
-            ),
-          ),
+              onPressed: () async {
+                list = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OpenPassengerList(),
+                  ),
+                );
+                notifyListeners();
+                // String s;
+                debugPrint("Home Screen : ${list["Adult"]}");
+                for (Object value in list.keys) {
+                  print("KATEGORİ: $value  ${list["$value"]}");
+                
+                }
+              },
+              child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.amberAccent,
+                  ),
+                  title: list == null
+                      ? Text("Select Passenger")
+                      : Text("${list["Adult"]} "))),
+          // Text("${list["Adult"]}")
+          // ListView.builder(
+          //     itemCount: list.length,
+          //     itemBuilder: (BuildContext context, int index) {
+          //       return Column(
+          //         children: [
+          //           Text("sa"),
+          //         ],
+          //       );
+          //     })
+          // ListView.builder(
+          //   itemCount: list.length,
+          //   itemBuilder: (BuildContext context, int index){
+          //     return Text("${list[index].passengerValue}");
+          // }
+          // )
+          // )
+
           TextButton(
-            child: const Text(
+            child: Text(
               'SEARCH',
               style: TextStyle(
                 color: Colors.amberAccent,
@@ -158,4 +215,22 @@ class MyFlightInfoField extends StatelessWidget {
       ),
     ));
   }
+
+  Future<String> _readFromAirportID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("fromAirportID");
+  }
+
+  Future<String> _readToAirportID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("toAirportID");
+  }
+  // Future<List<int>> _readPassengerValue(Future<List<String>> passengerValue) async {
+  //   List<int> values = new List<int>();
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   for (int i = 0; i < passengerValue.; i++) {
+  //     values.add(prefs.getInt(passengerValue[i]));
+  //   }
+  //   return values;
+  // }
 }

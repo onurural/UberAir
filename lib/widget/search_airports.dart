@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/models/airport.dart';
+import 'package:uberAir/models/places.dart';
 import 'package:uberAir/view_model/airport_view_model.dart';
+import 'package:uberAir/widget/my_flght_info_field_widget.dart';
 
-class SearchAirports extends SearchDelegate<Airport> {
+class SearchAirports extends SearchDelegate<Place> {
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -87,18 +89,25 @@ class SearchAirports extends SearchDelegate<Airport> {
                   itemCount: snapshot.data.places.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      title: Text(
-                        snapshot.data.places[index].placeId != null
-                            ? snapshot.data.places[index].placeId
-                            : "NULL",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(snapshot.data.places[index].countryId +
-                          "   " +
-                          snapshot.data.places[index].placeName),
-                      trailing:
-                          Icon(Icons.flight_takeoff, color: Colors.blueAccent),
-                    );
+                        title: Text(
+                          snapshot.data.places[index].placeId != null
+                              ? snapshot.data.places[index].placeId
+                              : "NULL",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(snapshot.data.places[index].countryId +
+                            "   " +
+                            snapshot.data.places[index].placeName),
+                        trailing: Icon(Icons.flight_takeoff,
+                            color: Colors.blueAccent),
+                        onTap: () {
+                         var value =
+                              snapshot.data.places[index] ;
+                          close(context, value);
+                          //                      Navigator.of(context)
+                          // ..popUntil((Route<dynamic> route) => route == MyFlightInfoField())
+                          // ..pop(MyFlightInfoField());
+                        });
                   },
                 );
               }

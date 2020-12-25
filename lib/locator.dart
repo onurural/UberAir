@@ -1,8 +1,12 @@
 import 'package:get_it/get_it.dart';
+
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
+import 'package:uberAir/view_model/search_view_model.dart';
 
 import 'api/airport_api_client.dart';
+
 import 'view_model/airport_view_model.dart';
+import 'widget/my_flght_info_field_widget.dart';
 
 //Singleton
 GetIt locator = GetIt.asNewInstance();
@@ -13,5 +17,6 @@ void setUpLocator() {
   locator.registerLazySingleton(() => AirportApiClient());
   locator.registerFactory(() => AirportViewModel());
   locator.registerFactory(() => ItemViewModel());
-
+  locator.registerLazySingleton(() => SearchViewModel());
+  locator.registerLazySingleton(() => MyFlightInfoField());
 }

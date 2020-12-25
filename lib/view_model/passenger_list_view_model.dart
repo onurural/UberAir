@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 abstract class ListItem {
   Widget buildTitle(BuildContext context, String _title);
@@ -13,14 +14,45 @@ class ItemViewModel with ChangeNotifier implements ListItem {
   int _indexOld = 0;
   int _indexStudent = 0;
   int _indexYoung = 0;
+  fetchPassengerValue() {
+    Map<String,int> passengerMap =  Map();
+  
+    if (_indexAdult != 0) {
+      passengerMap["Adult"] = _indexAdult;
+      notifyListeners();
+    }
+    if (_indexBaby != 0) {
+      passengerMap["Baby"] = _indexBaby;
+      notifyListeners();
+    }
+    if (_indexKid != 0) {
+      passengerMap["Kid"] = _indexKid;
+      
+      notifyListeners();
+    }
+    if (_indexOld != 0) {
+     passengerMap["Old"] = _indexOld;
+      notifyListeners();
+    }
+    if (_indexStudent != 0) {
+      passengerMap["Student"] = _indexStudent;
+      notifyListeners();
+    }
+    if (_indexYoung != 0) {
+      passengerMap["Young"] = _indexYoung;
+      notifyListeners();
+    }
+
+    return passengerMap;
+  }
 
   @override
   Widget buildSubTitle(BuildContext context, String _subTitle) {
     return Container(
       width: 150,
-      height: 25,
+      height: 30,
       child: Text("($_subTitle)",
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
     );
   }
 
@@ -28,9 +60,9 @@ class ItemViewModel with ChangeNotifier implements ListItem {
   Widget buildTitle(BuildContext context, String _title) {
     return Container(
       width: 150,
-      height: 50,
+      height: 30,
       child: Text("$_title",
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -40,16 +72,35 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.exposure_minus_1_sharp),
-          onPressed: decrementAdult,
+          icon: Icon(Icons.do_disturb_on_outlined),
+          onPressed: () {
+            if (_indexAdult > 0) {
+              decrementAdult();
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Passenger number cannot below zero",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
           iconSize: 30,
+        ),
+        SizedBox(
+          width: 10,
         ),
         Text(
           "${_indexAdult.toString()}",
           style: TextStyle(fontSize: 30, color: Colors.amberAccent),
         ),
+        SizedBox(
+          width: 10,
+        ),
         IconButton(
-          icon: Icon(Icons.exposure_plus_1),
+          icon: Icon(Icons.add_box_outlined),
           onPressed: incrementAdult,
           iconSize: 30,
         ),
@@ -62,16 +113,35 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.exposure_minus_1_sharp),
-          onPressed: decrementKid,
+          icon: Icon(Icons.do_disturb_on_outlined),
+          onPressed: () {
+            if (_indexKid > 0) {
+              decrementKid();
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Passenger number cannot below zero",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
           iconSize: 30,
+        ),
+        SizedBox(
+          width: 10,
         ),
         Text(
           "${_indexKid.toString()}",
           style: TextStyle(fontSize: 30, color: Colors.amberAccent),
         ),
+        SizedBox(
+          width: 10,
+        ),
         IconButton(
-          icon: Icon(Icons.exposure_plus_1),
+          icon: Icon(Icons.add_box_outlined),
           onPressed: incrementKid,
           iconSize: 30,
         ),
@@ -84,16 +154,35 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.exposure_minus_1_sharp),
-          onPressed: decrementBaby,
+          icon: Icon(Icons.do_disturb_on_outlined),
+          onPressed: () {
+            if (_indexBaby > 0) {
+              decrementBaby();
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Passenger number cannot below zero",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
           iconSize: 30,
+        ),
+        SizedBox(
+          width: 10,
         ),
         Text(
           "${_indexBaby.toString()}",
           style: TextStyle(fontSize: 30, color: Colors.amberAccent),
         ),
+        SizedBox(
+          width: 10,
+        ),
         IconButton(
-          icon: Icon(Icons.exposure_plus_1),
+          icon: Icon(Icons.add_box_outlined),
           onPressed: incrementBaby,
           iconSize: 30,
         ),
@@ -106,16 +195,35 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.exposure_minus_1_sharp),
-          onPressed: decrementOld,
+          icon: Icon(Icons.do_disturb_on_outlined),
+          onPressed: () {
+            if (_indexOld > 0) {
+              decrementOld();
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Passenger number cannot below zero",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
           iconSize: 30,
+        ),
+        SizedBox(
+          width: 10,
         ),
         Text(
           "${_indexOld.toString()}",
           style: TextStyle(fontSize: 30, color: Colors.amberAccent),
         ),
+        SizedBox(
+          width: 10,
+        ),
         IconButton(
-          icon: Icon(Icons.exposure_plus_1),
+          icon: Icon(Icons.add_box_outlined),
           onPressed: incrementOld,
           iconSize: 30,
         ),
@@ -128,16 +236,35 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.exposure_minus_1_sharp),
-          onPressed: decrementStudent,
+          icon: Icon(Icons.do_disturb_on_outlined),
+          onPressed: () {
+            if (_indexStudent > 0) {
+              decrementStudent();
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Passenger number cannot below zero",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
           iconSize: 30,
+        ),
+        SizedBox(
+          width: 10,
         ),
         Text(
           "${_indexStudent.toString()}",
           style: TextStyle(fontSize: 30, color: Colors.amberAccent),
         ),
+        SizedBox(
+          width: 10,
+        ),
         IconButton(
-          icon: Icon(Icons.exposure_plus_1),
+          icon: Icon(Icons.add_box_outlined),
           onPressed: incrementStudent,
           iconSize: 30,
         ),
@@ -150,16 +277,35 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.exposure_minus_1_sharp),
-          onPressed: decrementYoung,
+          icon: Icon(Icons.do_disturb_on_outlined),
+          onPressed: () {
+            if (_indexYoung > 0) {
+              decrementYoung();
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Passenger number cannot below zero",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
           iconSize: 30,
+        ),
+        SizedBox(
+          width: 10,
         ),
         Text(
           "${_indexYoung.toString()}",
           style: TextStyle(fontSize: 30, color: Colors.amberAccent),
         ),
+        SizedBox(
+          width: 10,
+        ),
         IconButton(
-          icon: Icon(Icons.exposure_plus_1),
+          icon: Icon(Icons.add_box_outlined),
           onPressed: incrementYoung,
           iconSize: 30,
         ),
