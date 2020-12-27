@@ -35,9 +35,11 @@ class OpenPassengerList extends StatelessWidget {
                     Icons.done_rounded,
                     color: Colors.white,
                   ),
-                  onPressed: () {
-                    Map<String,int> passengermap = item.fetchPassengerValue();
+                  onPressed: () async {
+                    Map<String, int> passengermap =
+                        await item.fetchPassengerValue();
                     Navigator.pop(context, passengermap);
+                    
                   });
             })
           ],
@@ -46,7 +48,6 @@ class OpenPassengerList extends StatelessWidget {
             icon: Icon(Icons.close, color: Colors.white),
             onPressed: () {
               Navigator.pop(context, null);
-              
             },
           ),
         ),

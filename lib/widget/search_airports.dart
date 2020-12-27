@@ -45,18 +45,25 @@ class SearchAirports extends SearchDelegate<Place> {
                   itemCount: snapshot.data.places.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      title: Text(
-                        snapshot.data.places[index].placeId != null
-                            ? snapshot.data.places[index].placeId
-                            : "NULL",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(snapshot.data.places[index].countryId +
-                          "   " +
-                          snapshot.data.places[index].placeName),
-                      trailing:
-                          Icon(Icons.flight_takeoff, color: Colors.blueAccent),
-                    );
+                        title: Text(
+                          snapshot.data.places[index].placeId != null
+                              ? snapshot.data.places[index].placeId
+                              : "NULL",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(snapshot.data.places[index].countryId +
+                            "   " +
+                            snapshot.data.places[index].placeName),
+                        trailing: Icon(Icons.flight_takeoff,
+                            color: Colors.blueAccent),
+                        onTap: () {
+                         var value =
+                              snapshot.data.places[index] ;
+                          close(context, value);
+                          //                      Navigator.of(context)
+                          // ..popUntil((Route<dynamic> route) => route == MyFlightInfoField())
+                          // ..pop(MyFlightInfoField());
+                        });
                   },
                 );
               }

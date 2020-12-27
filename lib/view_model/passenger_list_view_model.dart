@@ -15,34 +15,31 @@ class ItemViewModel with ChangeNotifier implements ListItem {
   int _indexStudent = 0;
   int _indexYoung = 0;
   fetchPassengerValue() {
-    Map<String,int> passengerMap =  Map();
-  
+    Map<String, int> passengerMap = Map();
     if (_indexAdult != 0) {
       passengerMap["Adult"] = _indexAdult;
-      notifyListeners();
     }
     if (_indexBaby != 0) {
       passengerMap["Baby"] = _indexBaby;
-      notifyListeners();
     }
     if (_indexKid != 0) {
       passengerMap["Kid"] = _indexKid;
-      
-      notifyListeners();
     }
     if (_indexOld != 0) {
-     passengerMap["Old"] = _indexOld;
-      notifyListeners();
+      passengerMap["Old"] = _indexOld;
     }
     if (_indexStudent != 0) {
       passengerMap["Student"] = _indexStudent;
-      notifyListeners();
     }
     if (_indexYoung != 0) {
       passengerMap["Young"] = _indexYoung;
-      notifyListeners();
     }
 
+    return passengerMap;
+  }
+
+  Future<Map> readPassengerValue() async {
+    Map<String, int> passengerMap = await fetchPassengerValue();
     return passengerMap;
   }
 
