@@ -180,11 +180,11 @@ class MyFlightInfoField extends StatelessWidget {
                   );
                 },
                 child: ListTile(
-                  leading:
-                      Padding(
-                        padding: const EdgeInsets.only(top:50),
-                        child: Icon(Icons.person, size: 40, color: Colors.amberAccent),
-                      ),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child:
+                        Icon(Icons.person, size: 40, color: Colors.amberAccent),
+                  ),
                   title: Row(
                     children: [
                       Expanded(

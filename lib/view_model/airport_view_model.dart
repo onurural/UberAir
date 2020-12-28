@@ -14,7 +14,6 @@ class AirportViewModel with ChangeNotifier {
   AirportViewModel() {
     _state = AirportState.InitialAirportState;
   }
-  // AirportRepository _airportRepository = locator<AirportRepository>();
   AirportState _state;
   Airport _airportList;
     set state(AirportState value) {

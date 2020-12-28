@@ -26,9 +26,4 @@ class AirportApiClient {
       throw Exception("Failed to load data");
     }
   }
-
-  // List<Place> parseJson(String body) {
-  //   final parsed = jsonDecode(body).cast<Map <String,dynamic>>();
-  //   return parsed.map<Place>((json)=>Place.fromJson(json)).toList();
-  // }
 }
