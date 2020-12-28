@@ -39,7 +39,6 @@ class OpenPassengerList extends StatelessWidget {
                     Map<String, int> passengermap =
                         await item.fetchPassengerValue();
                     Navigator.pop(context, passengermap);
-                    
                   });
             })
           ],

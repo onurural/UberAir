@@ -4,7 +4,7 @@ import 'package:uberAir/models/airport.dart';
 import 'package:http/http.dart' as http;
 
 class AirportApiClient {
-  static const _api_key = "ea187fa0a8msh9348745ba0d3c5fp1bbfe7jsn9f65d92822b9";
+  static const _api_key = "WRITE YOUR  API KEY HERE";
   static const String _baseUrl =
       "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com";
   Map<String, String> headers = {

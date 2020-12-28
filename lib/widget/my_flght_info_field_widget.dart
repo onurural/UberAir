@@ -10,8 +10,6 @@ import 'search_airports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyFlightInfoField extends StatelessWidget {
-  MyFlightInfoField();
-
   @override
   Widget build(BuildContext context) {
     return (Container(
