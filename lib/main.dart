@@ -4,7 +4,9 @@ import 'package:uberAir/locator.dart';
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
 import 'package:uberAir/widget/uberAir_widget.dart';
 import 'view_model/airport_view_model.dart';
+import 'view_model/calendar_view_model.dart';
 import 'view_model/search_view_model.dart';
+
 
 void main() async {
   setUpLocator();
@@ -27,6 +29,9 @@ class MyApp extends StatelessWidget {
             create: (context) => locator<ItemViewModel>()),
         ChangeNotifierProvider<SearchViewModel>(
             create: (context) => locator<SearchViewModel>()),
+        ChangeNotifierProvider<CalendarViewModel>(
+            create: (context) => locator<CalendarViewModel>()),
+        
       ],
     );
   }
