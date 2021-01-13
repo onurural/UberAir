@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uberAir/widget/search_airports.dart';
+import 'package:uberAir/widget/search_airports_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchViewModel with ChangeNotifier {
   String airportIDFrom;
   String airportIDTo;
-  Future<String> searchNPrintResultFrom(BuildContext context) async {
+  String cityName;
+  Future<String> searchNPrintResultInbound(BuildContext context) async {
     return showSearch(context: context, delegate: SearchAirports())
         .then((value) {
       airportIDFrom = value.placeId;
@@ -16,27 +17,31 @@ class SearchViewModel with ChangeNotifier {
     });
   }
 
-  Future<String> searchNPrintResultTo(BuildContext context) async {
+  Future<String> searchNPrintResultOutbound(BuildContext context) async {
     return showSearch(context: context, delegate: SearchAirports())
         .then((value) {
       airportIDTo = value.placeId;
+      
       setupTo();
       notifyListeners();
       return airportIDTo;
     });
   }
+  
 
   setupFrom() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
-        "fromAirportID", airportIDFrom.substring(0, airportIDFrom.length - 4));
+        "inboundCity", airportIDFrom.substring(0, airportIDFrom.length - 4));
+    print("inbound city sp ye eklendi $airportIDFrom");
     notifyListeners();
   }
 
   setupTo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
-        "toAirportID", airportIDTo.substring(0, airportIDTo.length - 4));
+        "outboundCity", airportIDTo.substring(0, airportIDTo.length - 4));
+    print("outboundCity sp ye eklendi");
     notifyListeners();
   }
 }

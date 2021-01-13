@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/calendar_view_model.dart';
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
 import 'package:uberAir/view_model/search_view_model.dart';
-import 'package:uberAir/widget/flight_screen.dart';
+import 'package:uberAir/widget/flights_screen.dart';
 import 'departure_calendar.dart';
 import 'my_app_bar_widget.dart';
 import 'return_caledar.dart';
 import 'open_passenger_list_widget.dart';
-import 'search_airports.dart';
+import 'search_airports_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uberAir/widget/return_caledar.dart';
 
@@ -57,9 +57,10 @@ class MyFlightInfoField extends StatelessWidget {
                 }, child: Consumer<CalendarViewModel>(
                     builder: (context, item, child) {
                   String departureDate = item.selectedDeparuteDate.toString();
+                  _setDepartureDate(departureDate);
                   return Text(
                     item.selectedDeparuteDate != null
-                        ? departureDate.substring(0,10)
+                        ? departureDate.substring(0, 10)
                         : "Select date",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
                   );
@@ -73,6 +74,7 @@ class MyFlightInfoField extends StatelessWidget {
                 }, child: Consumer<CalendarViewModel>(
                     builder: (context, item, child) {
                   String returnDate = item.selectedReturnDate.toString();
+                  _setReturnDate(returnDate);
                   return Text(
                     item.selectedReturnDate != null
                         ? returnDate.substring(0, 10)
@@ -122,27 +124,23 @@ class MyFlightInfoField extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Consumer<SearchViewModel>(builder: (context, item, child) {
-                  return SizedBox(
-                    width: 100,
-                    child: FlatButton(
-                      onPressed: () {
-                        item.searchNPrintResultFrom(
-                          context,
+                  return FlatButton(
+                    onPressed: () {
+                      item.searchNPrintResultInbound(
+                        context,
+                      );
+                    },
+                    child: FutureBuilder<String>(
+                      future: _getInboundAirport(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        return Text(
+                          snapshot.data != null
+                              ? snapshot.data
+                              : "Select Airport",
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.w400),
                         );
                       },
-                      child: FutureBuilder<String>(
-                        future: _readFromAirportID(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          return Text(
-                            snapshot.data != null
-                                ? snapshot.data
-                                : "Select Airport",
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.w400),
-                          );
-                        },
-                      ),
                     ),
                   );
                 }),
@@ -153,19 +151,19 @@ class MyFlightInfoField extends StatelessWidget {
                 Consumer<SearchViewModel>(builder: (context, item, child) {
                   return FlatButton(
                     onPressed: () {
-                      item.searchNPrintResultTo(
+                      item.searchNPrintResultOutbound(
                         context,
                       );
                     },
                     child: FutureBuilder<String>(
-                      future: _readToAirportID(),
+                      future: _getOutboundAirport(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         return Text(
                           snapshot.data != null
-                              ? snapshot.data
+                              ? "${snapshot.data} "
                               : "Select Airport",
                           style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w400),
+                              fontSize: 22, fontWeight: FontWeight.w400),
                         );
                       },
                     ),
@@ -213,27 +211,32 @@ class MyFlightInfoField extends StatelessWidget {
                                     future: item.readPassengerValue(),
                                     builder: (BuildContext context,
                                         AsyncSnapshot<dynamic> snapshot) {
-                                      return ListView.separated(
-                                        addAutomaticKeepAlives: false,
-                                        itemCount: snapshot.data.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          String key = snapshot.data.keys
-                                              .elementAt(index);
-                                          return Text(
-                                            "${snapshot.data[key]} $key ",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w400),
-                                          );
-                                        },
-                                        separatorBuilder:
-                                            (BuildContext context, int index) =>
-                                                Divider(
-                                          color: Colors.amberAccent,
-                                          thickness: 1,
-                                        ),
-                                      );
+                                      return snapshot.data.length == null
+                                          ? Text("Select Passenger")
+                                          : ListView.separated(
+                                              addAutomaticKeepAlives: false,
+                                              itemCount: snapshot.data.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                String key = snapshot.data.keys
+                                                    .elementAt(index);
+                                                return Text(
+                                                  "${snapshot.data[key]} $key ",
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                          int index) =>
+                                                      Divider(
+                                                color: Colors.amberAccent,
+                                                thickness: 1,
+                                              ),
+                                            );
                                     });
                               }),
                             ),
@@ -262,13 +265,25 @@ class MyFlightInfoField extends StatelessWidget {
     ));
   }
 
-  Future<String> _readFromAirportID() async {
+  Future<String> _getInboundAirport() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("fromAirportID");
+    return prefs.getString("inboundCity");
   }
 
-  Future<String> _readToAirportID() async {
+  Future<String> _getOutboundAirport() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("toAirportID");
+    return prefs.getString("outboundCity");
+  }
+
+  void _setDepartureDate(String departureDate) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("inboundDate", departureDate);
+    print("inboundDate spye eklendi");
+  }
+
+  void _setReturnDate(String returnDate) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("outboundDate", returnDate);
+    print("outboundDate spye eklendi");
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:uberAir/widget/search_airports.dart';
+import 'package:uberAir/widget/search_airports_screen.dart';
 
 class OpenAirPorts extends StatelessWidget {
   @override

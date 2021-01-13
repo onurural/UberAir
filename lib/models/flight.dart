@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:uberAir/models/places.dart';
+import 'package:uberAir/models/place2.dart';
 import 'package:uberAir/models/quote.dart';
 
 import 'carrier.dart';
@@ -26,14 +26,14 @@ class Flights {
 
     List<Quote> quotes;
     List<Carrier> carriers;
-    List<Place> places;
+    List<Places> places;
     List<Currency> currencies;
     Dates dates;
 
     factory Flights.fromJson(Map<String, dynamic> json) => Flights(
         quotes: List<Quote>.from(json["Quotes"].map((x) => Quote.fromJson(x))),
         carriers: List<Carrier>.from(json["Carriers"].map((x) => Carrier.fromJson(x))),
-        places: List<Place>.from(json["Places"].map((x) => Place.fromJson(x))),
+        places: List<Places>.from(json["Places"].map((x) => Places.fromJson(x))),
         currencies: List<Currency>.from(json["Currencies"].map((x) => Currency.fromJson(x))),
         dates: Dates.fromJson(json["Dates"]),
     );
