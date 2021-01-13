@@ -18,5 +18,4 @@ void setUpLocator() {
   locator.registerLazySingleton(() => SearchViewModel());
   locator.registerLazySingleton(() => MyFlightInfoField());
   locator.registerFactory(() => CalendarViewModel());
-
 }

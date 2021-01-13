@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uberAir/widget/sign_in_widget.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'sign_up_widget.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -88,7 +91,7 @@ class MyDrawer extends StatelessWidget {
             "Welcome to UberAir. Please sign in or sign up to see deals and much more.",
             style: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),
@@ -96,7 +99,6 @@ class MyDrawer extends StatelessWidget {
           color: Colors.black,
           thickness: 1,
         ),
-        Text("BuildExpansionTile here"),
         ListTile(
           onTap: () {
             Navigator.push(context,
@@ -137,16 +139,39 @@ class MyDrawer extends StatelessWidget {
           Column(
             children: <Widget>[
               SignInButton(Buttons.Email, onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignInWidget()));
-              }),
-              SignInButton(Buttons.GoogleDark, onPressed: () {})
-            ],
-          )
-        ],
-      ),
-    );
-  }
+               
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => SignInWidget()));
+                              }),
+                              SignInButton(Buttons.GoogleDark, onPressed: () {
+                                _signInWithGoogle();
+                              })
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                
+                  Future<UserCredential> _signInWithGoogle() async {
+                    try {
+                      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+                
+                      final GoogleSignInAuthentication googleAuth =
+                          await googleUser.authentication;
+                
+                      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+                        accessToken: googleAuth.accessToken,
+                        idToken: googleAuth.idToken,
+                      );
+                
+                      return await FirebaseAuth.instance.signInWithCredential(credential);
+                    } catch (e) {
+                      print("Gmail ile giriş hata $e");
+                    }
+                  }
+                
+                  
 }
 
 class BuildDrawerHeader extends StatelessWidget {
@@ -170,7 +195,7 @@ class BuildDrawerHeader extends StatelessWidget {
         ),
       ),
       Container(
-        margin: EdgeInsets.only(left: 10),
+        padding: EdgeInsets.all(20),
         child: Row(
           children: <Widget>[
             Text(

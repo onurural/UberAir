@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uberAir/view_model/authentication_view_model.dart';
+
+String _email;
+String _password;
 
 class SignInWidget extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,21 +34,32 @@ class SignInWidget extends StatelessWidget {
                         buildText2(),
                         Container(
                           padding: EdgeInsets.only(bottom: 20),
-                          child: TextField(
+                          child: TextFormField(
                             decoration: InputDecoration(
                                 hintText: "E-Mail",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (String input) {
+                              _email = input;
+                              return null;
+                            },
                           ),
                         ),
                         Container(
                           child: TextFormField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                hintText: "Password",
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                          ),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  hintText: "Password",
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20))),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String input) {
+                                _password = input;
+                                return null;
+                              }),
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 20),
@@ -55,7 +69,11 @@ class SignInWidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(18.0),
                                 side: BorderSide(color: Colors.black)),
                             child: Text("Sign in"),
-                            onPressed: () {},
+                            onPressed: () {
+                              context
+                                  .read<AuthenticationViewModel>()
+                                  .signIn(_email, _password);
+                            },
                             elevation: 10,
                           ),
                         )

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uberAir/view_model/authentication_view_model.dart';
+
+String _email;
+String _password;
 
 class SignUpWidget extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
+    String _confirmedPassword;
     return Scaffold(
       body: Container(
         decoration: buildBoxDecoration(),
@@ -15,7 +19,7 @@ class SignUpWidget extends StatelessWidget {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
-                  top: 85,
+                  top: 50,
                 ),
                 alignment: Alignment.center,
                 child: Column(children: <Widget>[
@@ -24,27 +28,50 @@ class SignUpWidget extends StatelessWidget {
                     padding: EdgeInsets.only(
                       right: 50,
                       left: 50,
-                      top: 100,
+                      top: 75,
                     ),
                     child: Column(
                       children: <Widget>[
                         buildText2(),
                         Container(
                           padding: EdgeInsets.only(bottom: 20),
-                          child: TextField(
+                          child: TextFormField(
                             decoration: InputDecoration(
                                 hintText: "Name and Surname",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
+                            validator: (String data) {
+                              if (data.length < 4) {
+                                return "Please enter full name and surname";
+                              } else {
+                                return null;
+                              }
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.only(bottom: 20),
-                          child: TextField(
+                          child: TextFormField(
                             decoration: InputDecoration(
                                 hintText: "E-Mail",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
+                            validator: (String data) {
+                              Pattern pattern =
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                              RegExp regex = new RegExp(pattern);
+
+                              if (!regex.hasMatch(data)) {
+                                return "unvalid email";
+                              } else {
+                                _email = data;
+                                return null;
+                              }
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                         ),
                         Container(
@@ -55,6 +82,19 @@ class SignUpWidget extends StatelessWidget {
                                 hintText: "Password",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
+                            validator: (String data) {
+                              Pattern pattern =
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+                              RegExp regex = new RegExp(pattern);
+                              if (!regex.hasMatch(data)) {
+                                return "Password should contain upper letter\n number, special characters and at least 8 characters";
+                              } else {
+                                _confirmedPassword = data;
+                                return null;
+                              }
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                         ),
                         Container(
@@ -64,6 +104,16 @@ class SignUpWidget extends StatelessWidget {
                                 hintText: "Confirm Password",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
+                            validator: (String data) {
+                              if (!(_confirmedPassword == data)) {
+                                return "Passwords are not match";
+                              } else {
+                                _password = data;
+                                return null;
+                              }
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                           ),
                         ),
                         Container(
@@ -74,7 +124,11 @@ class SignUpWidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(18.0),
                                 side: BorderSide(color: Colors.black)),
                             child: Text("Sign up"),
-                            onPressed: () {},
+                            onPressed: () {
+                              context
+                                  .read<AuthenticationViewModel>()
+                                  .signUp(_email, _password);
+                            },
                             elevation: 10,
                           ),
                         )
@@ -102,7 +156,7 @@ class SignUpWidget extends StatelessWidget {
   Container buildText2() {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.only(bottom: 25),
+      padding: EdgeInsets.only(bottom: 10),
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:uberAir/api/api_client.dart';
 import 'package:uberAir/models/flight.dart';
 import '../locator.dart';
+FirebaseAuth auth = FirebaseAuth.instance;
 
-class Database {
+class Database with ChangeNotifier{
   Map<String, String> placeMap = Map();
   final _firestoreInstance = FirebaseFirestore.instance;
 
   AirportApiClient _airportApiClient = locator<AirportApiClient>();
   Flights _flight = Flights();
+
 
   void fillMap() async {
     print("FILL MAP Çalıştı");

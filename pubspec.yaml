@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  firebase_auth: ^0.20.0
+  google_sign_in: ^4.5.9
   flutter_signin_button: ^1.1.0
   cloud_firestore: ^0.16.0
   table_calendar: ^2.3.3

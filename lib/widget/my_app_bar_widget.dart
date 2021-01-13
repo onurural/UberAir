@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uberAir/widget/my_side_bar_menu_widget.dart';
+import 'package:uberAir/widget/my_drawer.dart';
 import 'package:uberAir/widget/sign_in_widget.dart';
 import 'package:uberAir/widget/sign_up_widget.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -190,7 +190,7 @@ class MyAppBar extends StatelessWidget {
 }
 
 buildDrawerHeader() {
-  Widget build(BuildContext context) {
+  
     return Stack(children: <Widget>[
       Container(
         alignment: Alignment.topCenter,
@@ -229,4 +229,4 @@ buildDrawerHeader() {
       ),
     ]);
   }
-}
+
