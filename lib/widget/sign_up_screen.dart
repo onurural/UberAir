@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 
+String _nameSurname;
+String _confirmPassword;
 String _email;
 String _password;
 
@@ -10,6 +13,11 @@ class SignUpWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String _confirmedPassword;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Container(
         decoration: buildBoxDecoration(),
         height: double.infinity,
@@ -38,10 +46,12 @@ class SignUpWidget extends StatelessWidget {
                           child: TextFormField(
                             decoration: InputDecoration(
                                 hintText: "Name and Surname",
+                                prefixIcon: Icon(Icons.person),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
                             validator: (String data) {
                               if (data.length < 4) {
+                                _nameSurname = data;
                                 return "Please enter full name and surname";
                               } else {
                                 return null;
@@ -55,6 +65,7 @@ class SignUpWidget extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
                                 hintText: "E-Mail",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
@@ -79,6 +90,7 @@ class SignUpWidget extends StatelessWidget {
                           child: TextFormField(
                             obscureText: true,
                             decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.lock),
                                 hintText: "Password",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
@@ -89,7 +101,7 @@ class SignUpWidget extends StatelessWidget {
                               if (!regex.hasMatch(data)) {
                                 return "Password should contain upper letter\n number, special characters and at least 8 characters";
                               } else {
-                                _confirmedPassword = data;
+                                _password = data;
                                 return null;
                               }
                             },
@@ -101,14 +113,17 @@ class SignUpWidget extends StatelessWidget {
                           child: TextFormField(
                             obscureText: true,
                             decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.lock),
                                 hintText: "Confirm Password",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
                             validator: (String data) {
                               if (!(_confirmedPassword == data)) {
+                                 _confirmedPassword = _password;
                                 return "Passwords are not match";
                               } else {
-                                _password = data;
+                                _confirmedPassword = data;
+                                
                                 return null;
                               }
                             },
@@ -125,9 +140,53 @@ class SignUpWidget extends StatelessWidget {
                                 side: BorderSide(color: Colors.black)),
                             child: Text("Sign up"),
                             onPressed: () {
+                              if (_nameSurname == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter name and surname",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                              if (_email == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter E-Mail",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                              if (_password == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter password",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                              if (_confirmedPassword == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please confirm your password",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
                               context
                                   .read<AuthenticationViewModel>()
                                   .signUp(_email, _password);
+                                  Fluttertoast.showToast(
+                                    msg: "We send you a link to your mail adress please verify",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                                  
                             },
                             elevation: 10,
                           ),

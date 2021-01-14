@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 
+import 'forgot_password_screen.dart';
+
 String _email;
 String _password;
 
@@ -9,6 +11,12 @@ class SignInWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Container(
         decoration: buildBoxDecoration(),
         height: double.infinity,
@@ -36,6 +44,7 @@ class SignInWidget extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
                                 hintText: "E-Mail",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
@@ -51,6 +60,7 @@ class SignInWidget extends StatelessWidget {
                           child: TextFormField(
                               obscureText: true,
                               decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.lock),
                                   hintText: "Password",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20))),
@@ -60,6 +70,17 @@ class SignInWidget extends StatelessWidget {
                                 _password = input;
                                 return null;
                               }),
+                        ),
+                        Container(
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ForgotPassword()));
+                            },
+                            child: Text("Forgot your password ?"),
+                          ),
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 20),

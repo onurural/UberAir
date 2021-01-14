@@ -3,9 +3,18 @@ import 'package:flutter/material.dart';
 
 class AuthenticationViewModel with ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
+
   AuthenticationViewModel(this._firebaseAuth);
 
   Stream<User> get authState => _firebaseAuth.idTokenChanges();
+
+  bool isLogedIn() {
+    if (_firebaseAuth.currentUser != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   Future<String> signUp(String email, String password) async {
     try {
@@ -22,18 +31,70 @@ class AuthenticationViewModel with ChangeNotifier {
   void signIn(String email, String password) async {
     try {
       if (_firebaseAuth.currentUser == null) {
-        User loggedInUser = (await  _firebaseAuth.signInWithEmailAndPassword(
-            email: email, password: password)).user;
+        (await _firebaseAuth.signInWithEmailAndPassword(
+                email: email, password: password))
+            .user;
         print("Signed in!");
       } else {
-        print("currenUser != null ");
+        print("Current user != null ");
       }
     } catch (e) {
       print("sign in olurken hata $e");
     }
   }
 
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+  void resetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print("error on resetPassword  $e");
+    }
+  }
+
+  void signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      print("Sign out olurken hata $e");
+    }
+  }
+
+  void updatePassword(
+      String email, String password, String _newPassword) async {
+    try {
+      await _firebaseAuth.currentUser.updatePassword(_newPassword);
+      print("password updated");
+    } on FirebaseAuthException catch(e){
+      try {
+        EmailAuthCredential credential =
+            EmailAuthProvider.credential(email: email, password: password);
+
+        await FirebaseAuth.instance.currentUser
+            .reauthenticateWithCredential(credential);
+            await _firebaseAuth.currentUser.updatePassword(_newPassword);
+      } catch (e) {
+        print("reauthenticate hatası $e");
+      }
+      print("error on updatePassword $e");
+    }
+  }
+
+  void updateEmail(String _newEmail,String _oldEmail,String _password ) async {
+    try {
+      await _firebaseAuth.currentUser.updateEmail(_newEmail);
+      print("Email updated");
+    } catch (e) {
+      try {
+        EmailAuthCredential credential =
+            EmailAuthProvider.credential(email: _oldEmail, password: _password);
+
+        await FirebaseAuth.instance.currentUser
+            .reauthenticateWithCredential(credential);
+            await _firebaseAuth.currentUser.updateEmail(_newEmail);
+      } catch (e) {
+        print("reauthenticate hatası $e");
+      }
+      print("error on updateEmail $e");
+    }
   }
 }
