@@ -4,6 +4,7 @@ import 'package:uberAir/view_model/calendar_view_model.dart';
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
 import 'package:uberAir/view_model/search_view_model.dart';
 import 'package:uberAir/widget/flights_screen.dart';
+import 'package:uberAir/widget/loading_screen.dart';
 import 'departure_calendar_screen.dart';
 import 'my_app_bar_widget.dart';
 import 'return_caledar_screen.dart';
@@ -256,7 +257,7 @@ class MyFlightInfoField extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FligthScreen()));
+                    MaterialPageRoute(builder: (context) => LoadingPage()));
               },
             ),
           ],

@@ -14,6 +14,7 @@ class UberAir extends StatelessWidget {
               image: AssetImage("assets/plane_bg.jpg"), fit: BoxFit.cover)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        
         drawer: MyDrawer(),
         body: Center(
           child: MyFlightInfoField(),

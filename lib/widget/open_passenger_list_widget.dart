@@ -23,17 +23,18 @@ class OpenPassengerList extends StatelessWidget {
     subTitleList.add("Between 11-24 ");
     return Scaffold(
         appBar: AppBar(
+          
           centerTitle: true,
           title: Text(
             "Select Passenger",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
           actions: <Widget>[
             Consumer<ItemViewModel>(builder: (context, item, child) {
               return IconButton(
                   icon: Icon(
                     Icons.done_rounded,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () async {
                     Map<String, int> passengermap =
@@ -42,9 +43,9 @@ class OpenPassengerList extends StatelessWidget {
                   });
             })
           ],
-          backgroundColor: Colors.blue.shade900,
+          backgroundColor: Colors.amber,
           leading: IconButton(
-            icon: Icon(Icons.close, color: Colors.white),
+            icon: Icon(Icons.close, color: Colors.black),
             onPressed: () {
               Navigator.pop(context, null);
             },

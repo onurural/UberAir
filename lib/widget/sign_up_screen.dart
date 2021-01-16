@@ -96,7 +96,7 @@ class SignUpWidget extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(20))),
                             validator: (String data) {
                               Pattern pattern =
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~.?]).{8,}$';
                               RegExp regex = new RegExp(pattern);
                               if (!regex.hasMatch(data)) {
                                 return "Password should contain upper letter\n number, special characters and at least 8 characters";

@@ -178,7 +178,7 @@ class ChangeEmail extends StatelessWidget {
                         backgroundColor: Colors.red,
                         textColor: Colors.white,
                         fontSize: 16.0);
-                    context.read<AuthenticationViewModel>().signOut();
+                   // context.read<AuthenticationViewModel>().signOut();
                     Navigator.push(
                         context,
                         MaterialPageRoute(

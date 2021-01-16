@@ -7,9 +7,13 @@ class SearchViewModel with ChangeNotifier {
   String airportIDFrom;
   String airportIDTo;
   String cityName;
+  String inboundCityName;
+  String outboundCityName;
+
   Future<String> searchNPrintResultInbound(BuildContext context) async {
     return showSearch(context: context, delegate: SearchAirports())
         .then((value) {
+
       airportIDFrom = value.placeId;
       setupFrom();
       notifyListeners();
@@ -21,7 +25,7 @@ class SearchViewModel with ChangeNotifier {
     return showSearch(context: context, delegate: SearchAirports())
         .then((value) {
       airportIDTo = value.placeId;
-      
+      outboundCityName = value.placeName;
       setupTo();
       notifyListeners();
       return airportIDTo;
@@ -32,16 +36,24 @@ class SearchViewModel with ChangeNotifier {
   setupFrom() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
+        "inboundCityName", inboundCityName);
+    print("Gelen Değer View Model : ${prefs.getString("inboundCityName")}");
+    prefs.setString(
         "inboundCity", airportIDFrom.substring(0, airportIDFrom.length - 4));
     print("inbound city sp ye eklendi $airportIDFrom");
+   
     notifyListeners();
   }
+
+
 
   setupTo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
         "outboundCity", airportIDTo.substring(0, airportIDTo.length - 4));
     print("outboundCity sp ye eklendi");
+    prefs.setString(
+        "outboundCityName", outboundCityName);
     notifyListeners();
   }
 }

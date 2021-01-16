@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/locator.dart';
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
+import 'package:uberAir/widget/splash_screen.dart';
 import 'package:uberAir/widget/uberAir_widget.dart';
 import 'view_model/airport_view_model.dart';
 import 'view_model/authentication_view_model.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: "uberAir",
                 theme: ThemeData(primarySwatch: Colors.amber),
-                home: UberAir()),
+                home: Splash()),
             providers: [
               ChangeNotifierProvider<AirportViewModel>(
                   create: (context) => locator<AirportViewModel>()),

@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/models/flight.dart';
 import 'package:uberAir/view_model/airport_view_model.dart';
+import 'package:uberAir/widget/home_screen.dart';
+import 'package:uberAir/widget/loading_screen.dart';
 
 class FligthScreen extends StatelessWidget {
   @override
@@ -16,11 +20,18 @@ class FligthScreen extends StatelessWidget {
         appBar: AppBar(
             backgroundColor: Colors.amber,
             centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context, MaterialPageRoute(builder: (context) => MyFlightInfoField())); // BURAYA BAK !!!
+              },
+              ) ,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
+              
               children: [
-                Text("Izmir"),
+                Text("İzmir"),
                 Icon(Icons.trending_flat),
                 Text("Istanbul")
               ],
@@ -82,7 +93,6 @@ class FligthScreen extends StatelessWidget {
                   return ListView.builder(
                     itemCount: snapshot.data.quotes.length,
                     itemBuilder: (BuildContext context, int index) {
-                      
                       return Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Container(
@@ -151,7 +161,8 @@ class FligthScreen extends StatelessWidget {
                                               style: TextStyle(fontSize: 18),
                                             ),
                                             Icon(Icons.trending_flat),
-                                            Text("${snapshot.data.places[index].cityName}",
+                                            Text(
+                                                "${snapshot.data.places[index].cityName}",
                                                 style: TextStyle(fontSize: 18)),
                                           ],
                                         ),
@@ -173,16 +184,20 @@ class FligthScreen extends StatelessWidget {
                   );
                 }
               } else {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("No Connection with API"),
-                      Icon(Icons
-                          .signal_cellular_connected_no_internet_4_bar_outlined)
-                    ],
-                  ),
-                );
+               // Future.delayed(Duration(seconds: 4)).whenComplete(() => LoadingPage());
+                return MyFlightInfoField();
+                
+
+                // return Center(
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Text("No Connection with API"),
+                //       Icon(Icons
+                //           .signal_cellular_connected_no_internet_4_bar_outlined)
+                //     ],
+                //   ),
+                // );
               }
             },
           );
