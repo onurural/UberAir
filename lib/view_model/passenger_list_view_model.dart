@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 abstract class ListItem {
   Widget buildTitle(BuildContext context, String _title);
   Widget buildSubTitle(BuildContext context, String _subTitle);
@@ -39,9 +38,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
     return passengerMap;
   }
 
-  Future<Map> readPassengerValue() async {
-    Map<String, int> passengerMap = await fetchPassengerValue();
-    return passengerMap;
+   readPassengerValue() async {
+    try {
+      Map<String, int> passengerMap = await fetchPassengerValue();
+      return passengerMap;
+    } catch (e) {
+      print("Error $e");
+    }
   }
 
   @override

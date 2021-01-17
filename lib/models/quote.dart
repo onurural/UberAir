@@ -7,7 +7,7 @@ class Quote {
         this.direct,
         this.outboundLeg,
         this.inboundLeg,
-        this.quoteDateTime,
+        this.quoteDateTime, 
     });
 
     int quoteId;
@@ -18,6 +18,7 @@ class Quote {
     DateTime quoteDateTime;
 
     factory Quote.fromJson(Map<String, dynamic> json) => Quote(
+        
         quoteId: json["QuoteId"],
         minPrice: json["MinPrice"],
         direct: json["Direct"],

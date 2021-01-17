@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
+import 'package:uberAir/widget/home_screen.dart';
 
 import 'forgot_password_screen.dart';
 
@@ -94,6 +95,10 @@ class SignInWidget extends StatelessWidget {
                               context
                                   .read<AuthenticationViewModel>()
                                   .signIn(_email, _password);
+                              Navigator.pop(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyFlightInfoField()));
                             },
                             elevation: 10,
                           ),

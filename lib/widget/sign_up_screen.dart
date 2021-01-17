@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 
 String _nameSurname;
-String _confirmPassword;
 String _email;
 String _password;
 
@@ -118,12 +117,11 @@ class SignUpWidget extends StatelessWidget {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20))),
                             validator: (String data) {
-                              if (!(_confirmedPassword == data)) {
-                                 _confirmedPassword = _password;
+                              if (!(_password == data)) {
                                 return "Passwords are not match";
                               } else {
                                 _confirmedPassword = data;
-                                
+
                                 return null;
                               }
                             },
@@ -148,8 +146,8 @@ class SignUpWidget extends StatelessWidget {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-                              }
-                              if (_email == null) {
+                                return;
+                              } else if (_email == null) {
                                 Fluttertoast.showToast(
                                     msg: "Please enter E-Mail",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -157,8 +155,7 @@ class SignUpWidget extends StatelessWidget {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-                              }
-                              if (_password == null) {
+                              } else if (_password == null) {
                                 Fluttertoast.showToast(
                                     msg: "Please enter password",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -166,8 +163,7 @@ class SignUpWidget extends StatelessWidget {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-                              }
-                              if (_confirmedPassword == null) {
+                              } else if (_confirmedPassword == null) {
                                 Fluttertoast.showToast(
                                     msg: "Please confirm your password",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -175,18 +171,19 @@ class SignUpWidget extends StatelessWidget {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-                              }
-                              context
-                                  .read<AuthenticationViewModel>()
-                                  .signUp(_email, _password);
-                                  Fluttertoast.showToast(
-                                    msg: "We send you a link to your mail adress please verify",
+                              } else {
+                                context
+                                    .read<AuthenticationViewModel>()
+                                    .signUp(_email, _password);
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "We send you a link to your mail adress please verify",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.BOTTOM,
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-                                  
+                              }
                             },
                             elevation: 10,
                           ),

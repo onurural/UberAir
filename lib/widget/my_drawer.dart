@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
+import 'package:uberAir/widget/home_screen.dart';
+import 'package:uberAir/widget/privacy_policy.dart';
 import 'package:uberAir/widget/sign_in_screen.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'aboutus_screen.dart';
 import 'change_email_screen.dart';
 import 'change_password_screen.dart';
 import 'sign_up_screen.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -29,7 +32,7 @@ class MyDrawer extends StatelessWidget {
             ),
             child: ListView(
               padding: EdgeInsets.zero,
-              children: <Widget>[
+              children: [
                 BuildDrawerHeader(),
                 Container(
                   alignment: Alignment.center,
@@ -76,7 +79,54 @@ class MyDrawer extends StatelessWidget {
                     trailing: Icon(Icons.chevron_right),
                   ),
                 ),
-                buildExpansionTileSettings(context),
+                Row(
+                children: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PrivacyPolicy()));
+                      },
+                      child: Text("Privacy Policy")),
+                ],
+              ),
+              Divider(
+                color: Colors.black,
+                thickness: 1,
+              ),
+              Row(
+                children: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => AboutUs()));
+                      },
+                      child: Text("About Us")),
+                ],
+              ),
+                 buildExpansionTileSettings(context),
+                // if (!context.read<AuthenticationViewModel>().isLogedIn()) {
+                 
+                // },
+                Divider(
+                  color: Colors.black,
+                  thickness: 1,
+                ),
+                RaisedButton(
+                  color: Colors.red,
+                  onPressed: () {
+                    context.read<AuthenticationViewModel>().signOut();
+                    Navigator.pop(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyFlightInfoField()));
+                  },
+                  child: Text('Log Out',
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
+                ),
               ],
             )),
       ),
@@ -129,7 +179,7 @@ class MyDrawer extends StatelessWidget {
     );
   }
 
-  buildExpansionTileSettings(BuildContext context) {
+  Widget buildExpansionTileSettings(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           border: Border(

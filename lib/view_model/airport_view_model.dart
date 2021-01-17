@@ -18,6 +18,12 @@ class AirportViewModel with ChangeNotifier {
   AirportViewModel() {
     _state = AirportState.InitialAirportState;
   }
+  bool isPressed = false;
+  onPressed() {
+    isPressed = !isPressed;
+    notifyListeners();
+  }
+
   String inboundCity;
   String outboundCity;
   String inboundDate;
@@ -40,37 +46,29 @@ class AirportViewModel with ChangeNotifier {
     return _airportList;
   }
 
-  Future<Map> getFlightData() async {
-    print("spden gelen datalar mape geçiliyor... ");
-    Map dataMap = new Map();
-    if (dataMap != null) {
+  void getFlightData() async {
+    try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       inboundCity = prefs.getString("inboundCity");
-      dataMap["inboundCity"] = inboundCity;
       outboundCity = prefs.getString("outboundCity");
-      dataMap["ouboundCity"] = outboundCity;
       outboundDate = prefs.getString("outboundDate");
-      dataMap["outboundDate"] = outboundDate;
+      outboundDate = outboundDate.substring(0, 10);
       inboundDate = prefs.getString("inboundDate");
-      dataMap["inboundDate"] = inboundDate;
-      print("GEÇİLEN DEĞERLER ${dataMap["inboundCity"]}");
-
-      return dataMap;
-    } else {
-      Map nullMap = new Map();
-      String a = "boşbuAMK";
-      nullMap["boşBuAmk"] = a;
-      print("map == null");
-      return nullMap;
+      inboundDate = inboundDate.substring(0, 10);
+    } catch (e) {
+      print("get Flights error: $e");
     }
   }
 
   Future<Flights> getFlights(
       String inboundCity, outboundCity, outboundDate, inboundDate) async {
-    print("apiden veri çekiliyor 4");
-    _flight = await _airportApiClient.fetchFlights(
-        inboundCity, outboundCity, outboundDate, inboundDate);
+    try {
+      _flight = await _airportApiClient.fetchFlights(
+          inboundCity, outboundCity, outboundDate, inboundDate);
 
-    return _flight;
+      return _flight;
+    } catch (e) {
+      print("get Flights failed  $e");
+    }
   }
 }

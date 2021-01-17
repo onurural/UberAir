@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:uberAir/view_model/authentication_view_model.dart';
 
 class MyAppBar extends StatelessWidget {
   @override
@@ -17,10 +15,9 @@ class MyAppBar extends StatelessWidget {
                 color: Colors.amberAccent,
                 size: 25,
               ),
+              
               onPressed: () {
-                
-                  Scaffold.of(context).openDrawer();
-                
+               Scaffold.of(context).openDrawer();
               }),
           SizedBox(
             width: 70,

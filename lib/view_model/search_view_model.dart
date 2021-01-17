@@ -6,11 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SearchViewModel with ChangeNotifier {
   String airportIDFrom;
   String airportIDTo;
-  String cityName;
+  String inboundCity;
+  String outboundCity;
   Future<String> searchNPrintResultInbound(BuildContext context) async {
     return showSearch(context: context, delegate: SearchAirports())
         .then((value) {
       airportIDFrom = value.placeId;
+      inboundCity = value.placeName;
+
       setupFrom();
       notifyListeners();
       return airportIDFrom;
@@ -21,19 +24,19 @@ class SearchViewModel with ChangeNotifier {
     return showSearch(context: context, delegate: SearchAirports())
         .then((value) {
       airportIDTo = value.placeId;
-      
+      outboundCity = value.placeName;
       setupTo();
       notifyListeners();
       return airportIDTo;
     });
   }
-  
 
   setupFrom() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
         "inboundCity", airportIDFrom.substring(0, airportIDFrom.length - 4));
-    print("inbound city sp ye eklendi $airportIDFrom");
+    prefs.setString("inboundCityName", inboundCity);
+   
     notifyListeners();
   }
 
@@ -41,7 +44,8 @@ class SearchViewModel with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
         "outboundCity", airportIDTo.substring(0, airportIDTo.length - 4));
-    print("outboundCity sp ye eklendi");
+    prefs.setString("outboundCityName", outboundCity);
+
     notifyListeners();
   }
 }

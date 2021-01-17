@@ -156,17 +156,7 @@ class ChangeEmail extends StatelessWidget {
                         backgroundColor: Colors.red,
                         textColor: Colors.white,
                         fontSize: 16.0);
-                  } else if (context
-                      .read<AuthenticationViewModel>()
-                      .isLogedIn()) {
-                    Fluttertoast.showToast(
-                        msg: "Users should be loged in before change password",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                  } else {
+                  }  else {
                     context
                         .read<AuthenticationViewModel>()
                         .updateEmail(_newEmail, _oldEmail, _password);

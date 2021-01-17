@@ -135,7 +135,7 @@ class ChangePassword extends StatelessWidget {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))),
                 validator: (String data) {
-                  if (!(_confirmNewPassword == _newPassword)) {
+                  if ((_newPassword != data)) {
                     return "Passwords are not match";
                   } else {
                     _confirmNewPassword = data;
@@ -159,7 +159,7 @@ class ChangePassword extends StatelessWidget {
                     toastMesagge("new password");
                   } else if (_confirmNewPassword == null) {
                     toastMesagge("confirm password");
-                  } else if (context
+                  } else if (!context
                       .read<AuthenticationViewModel>()
                       .isLogedIn()) {
                     Fluttertoast.showToast(
@@ -174,7 +174,7 @@ class ChangePassword extends StatelessWidget {
                         .read<AuthenticationViewModel>()
                         .updatePassword(_email, _password, _newPassword);
                     Fluttertoast.showToast(
-                        msg: "Please enter password changed",
+                        msg: "password changed",
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
                         backgroundColor: Colors.red,

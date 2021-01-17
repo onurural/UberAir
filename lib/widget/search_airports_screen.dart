@@ -85,7 +85,7 @@ class SearchAirports extends SearchDelegate<Place> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.data == null) {
                 return Center(
-                  child: Text("Data = null"),
+                  child: Text("Please enter airport for search"),
                 );
               } else {
                 return ListView.builder(

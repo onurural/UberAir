@@ -34,6 +34,7 @@ class AuthenticationViewModel with ChangeNotifier {
         (await _firebaseAuth.signInWithEmailAndPassword(
                 email: email, password: password))
             .user;
+
         print("Signed in!");
       } else {
         print("Current user != null ");
@@ -53,7 +54,12 @@ class AuthenticationViewModel with ChangeNotifier {
 
   void signOut() async {
     try {
-      await _firebaseAuth.signOut();
+      if (isLogedIn()) {
+        await _firebaseAuth.signOut();
+        print("Loged out");
+      } else {
+        print("Sign in first");
+      }
     } catch (e) {
       print("Sign out olurken hata $e");
     }
@@ -64,14 +70,14 @@ class AuthenticationViewModel with ChangeNotifier {
     try {
       await _firebaseAuth.currentUser.updatePassword(_newPassword);
       print("password updated");
-    } on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       try {
         EmailAuthCredential credential =
             EmailAuthProvider.credential(email: email, password: password);
 
         await FirebaseAuth.instance.currentUser
             .reauthenticateWithCredential(credential);
-            await _firebaseAuth.currentUser.updatePassword(_newPassword);
+        await _firebaseAuth.currentUser.updatePassword(_newPassword);
       } catch (e) {
         print("reauthenticate hatası $e");
       }
@@ -79,7 +85,7 @@ class AuthenticationViewModel with ChangeNotifier {
     }
   }
 
-  void updateEmail(String _newEmail,String _oldEmail,String _password ) async {
+  void updateEmail(String _newEmail, String _oldEmail, String _password) async {
     try {
       await _firebaseAuth.currentUser.updateEmail(_newEmail);
       print("Email updated");
@@ -90,7 +96,7 @@ class AuthenticationViewModel with ChangeNotifier {
 
         await FirebaseAuth.instance.currentUser
             .reauthenticateWithCredential(credential);
-            await _firebaseAuth.currentUser.updateEmail(_newEmail);
+        await _firebaseAuth.currentUser.updateEmail(_newEmail);
       } catch (e) {
         print("reauthenticate hatası $e");
       }

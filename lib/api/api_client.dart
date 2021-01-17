@@ -21,43 +21,54 @@ class AirportApiClient {
     "Host": "<calculated when request is sent>",
   };
   Future<Flights> getDestinationID() async {
-    
     final response = await http.get(
         "http://partners.api.skyscanner.net/apiservices/browseroutes/v1.0/FR/eur/en-US/us/anywhere/anytime/anytime?apikey=prtl6749387986743898559646983194",
         headers: _skyscannerHeaders);
     if (response.statusCode == 200) {
-       return Flights.fromJson(jsonDecode(response.body));
+      print("${response.body}");
+      return Flights.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Status code: ${response.statusCode}");
     }
   }
-
-  //
   Future<Flights> fetchFlights(String inboundCity, String outboundCity,
       String outboundDate, String inboundDate) async {
-    final response = await http.get(
-        "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/TR/TRY/tur/$inboundCity/$outboundCity/$inboundDate/$outboundDate?apikey=prtl6749387986743898559646983194",
-        headers: _skyscannerHeaders);
-    if (response.statusCode != 404) {
-      print("Status Code : ${response.statusCode}");
-      print("${response.body}");
-      return Flights.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception("Failed to fetch flight ${response.statusCode}");
+    try {
+      if (inboundDate != null && outboundDate != null) {
+        final response = await http.get(
+            "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/TR/TRY/tur/$inboundCity/$outboundCity/$inboundDate/$outboundDate?apikey=prtl6749387986743898559646983194",
+            headers: _skyscannerHeaders);
+        if (response.statusCode == 200) {
+          return Flights.fromJson(jsonDecode(response.body));
+        } else {
+          throw Exception("Failed to fetch flight ${response.statusCode}");
+        } 
+      } else {
+        final response = await http.get(
+            "http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/TR/TRY/tur/$inboundCity/$outboundCity/anytime/anytime?apikey=prtl6749387986743898559646983194",
+            headers: _skyscannerHeaders);
+        if (response.statusCode == 200) {
+          return Flights.fromJson(jsonDecode(response.body));
+        } else {
+          throw Exception("Failed to fetch flight ${response.statusCode}");
+        }
+      }
+    } catch (e) {
+      print("Failed to fetch flight $e");
     }
   }
-
   Future<Airport> fetchAirport(String city) async {
-    final response = await http.get(
-        "https://rapidapi.p.rapidapi.com/apiservices/autosuggest/v1.0/TR/TRY/tur/?query=$city",
-        headers: _rapidAPIheaders);
-    if (response.statusCode == 200) {
-      // debugPrint(response.body.toString());
-      // return parseJson(response.body);
-
-      return Airport.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception("Failed to fetch airports");
+    try {
+      final response = await http.get(
+          "https://rapidapi.p.rapidapi.com/apiservices/autosuggest/v1.0/TR/TRY/tur/?query=$city",
+          headers: _rapidAPIheaders);
+      if (response.statusCode == 200) {
+        return Airport.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception("Failed to fetch airports");
+      }
+    } catch (e) {
+      print(" fetch airport hata $e");
     }
   }
 }
