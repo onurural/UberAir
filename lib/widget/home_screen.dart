@@ -134,48 +134,45 @@ class MyFlightInfoField extends StatelessWidget {
               children: [
                 Consumer<SearchViewModel>(builder: (context, item, child) {
                   return FlatButton(
-                      onPressed: () {
-                        item.searchNPrintResultInbound(
-                          context,
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: FutureBuilder<String>(
-                              future: _getInboundAirport(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                return Text(
-                                  snapshot.data != null
-                                      ? "${snapshot.data}"
-                                      : "Select Airport",
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w400),
-                                );
-                              },
-                            ),
+                    onPressed: () {
+                      item.searchNPrintResultInbound(
+                        context,
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: FutureBuilder<String>(
+                            future: _getInboundAirport(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              return Text(
+                                snapshot.data != null
+                                    ? "${snapshot.data}"
+                                    : "Select Airport",
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.w400),
+                              );
+                            },
                           ),
-                          Expanded(
-                            child: FutureBuilder<String>(
-                              future: _getInboundCityName(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                return Text(
-                                  snapshot.data != null
-                                      ? "${snapshot.data}"
-                                      : "Select Airport",
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w400),
-                                );
-                              },
-                            ),
+                        ),
+                        Expanded(
+                          child: FutureBuilder<String>(
+                            future: _getInboundCityName(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              return Text(
+                                snapshot.data != null
+                                    ? "${snapshot.data}"
+                                    : "Select Airport",
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.w400),
+                              );
+                            },
                           ),
-                        ],
-                      ),
-                    
+                        ),
+                      ],
+                    ),
                   );
                 }),
                 Icon(
@@ -211,6 +208,7 @@ class MyFlightInfoField extends StatelessWidget {
                             future: _getOutboundCityName(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
+                              print("outbound name güncellendi");
                               return Text(
                                 snapshot.data != null
                                     ? "${snapshot.data} "
@@ -317,7 +315,7 @@ class MyFlightInfoField extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoadingPage()));
+                      MaterialPageRoute(builder: (context) => FligthScreen()));
                 }),
           ),
         ],
@@ -337,6 +335,7 @@ class MyFlightInfoField extends StatelessWidget {
 
   Future<String> _getOutboundCityName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("shared preferences outbound city güncellendi ");
     return prefs.getString("outboundCityName");
   }
 

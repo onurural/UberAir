@@ -50,25 +50,45 @@ class AirportViewModel with ChangeNotifier {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       inboundCity = prefs.getString("inboundCity");
+      
+      print("İnboundCity : $inboundCity");
       outboundCity = prefs.getString("outboundCity");
+      
+      print("outboundCity : $outboundCity");
       outboundDate = prefs.getString("outboundDate");
+      print("outboundDate  : $outboundDate");
       outboundDate = outboundDate.substring(0, 10);
       inboundDate = prefs.getString("inboundDate");
+      print("inboundDate : $inboundDate");
       inboundDate = inboundDate.substring(0, 10);
+      
     } catch (e) {
       print("get Flights error: $e");
     }
   }
-
-  Future<Flights> getFlights(
-      String inboundCity, outboundCity, outboundDate, inboundDate) async {
-    try {
+  Future<Flights> getFlights() async {
+    
+    String inboundCity;
+    String outboundCity;
+    String inboundDate;
+    String outboundDate;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+      inboundCity = prefs.getString("inboundCity");
+      
+      print("İnboundCity : $inboundCity");
+      outboundCity = prefs.getString("outboundCity");
+      
+      print("outboundCity : $outboundCity");
+      outboundDate = prefs.getString("outboundDate");
+      print("outboundDate  : $outboundDate");
+      outboundDate = outboundDate.substring(0, 10);
+      inboundDate = prefs.getString("inboundDate");
+      print("inboundDate : $inboundDate");
+      inboundDate = inboundDate.substring(0, 10);
+   
       _flight = await _airportApiClient.fetchFlights(
           inboundCity, outboundCity, outboundDate, inboundDate);
 
       return _flight;
-    } catch (e) {
-      print("get Flights failed  $e");
-    }
   }
 }

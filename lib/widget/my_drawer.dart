@@ -105,28 +105,12 @@ class MyDrawer extends StatelessWidget {
                       child: Text("About Us")),
                 ],
               ),
-                 buildExpansionTileSettings(context),
-                // if (!context.read<AuthenticationViewModel>().isLogedIn()) {
-                 
-                // },
+                buildExpansionTileSettings(context),
                 Divider(
                   color: Colors.black,
                   thickness: 1,
                 ),
-                RaisedButton(
-                  color: Colors.red,
-                  onPressed: () {
-                    context.read<AuthenticationViewModel>().signOut();
-                    Navigator.pop(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyFlightInfoField()));
-                  },
-                  child: Text('Log Out',
-                      style: TextStyle(
-                        color: Colors.black,
-                      )),
-                ),
+               
               ],
             )),
       ),
@@ -215,7 +199,21 @@ class MyDrawer extends StatelessWidget {
                       },
                       child: Text("Change Email")),
                 ],
-              )
+              ),
+               RaisedButton(
+                  color: Colors.red,
+                  onPressed: () {
+                    context.read<AuthenticationViewModel>().signOut();
+                    Navigator.pop(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyFlightInfoField()));
+                  },
+                  child: Text('Log Out',
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
+                ),
             ],
           )
         ],

@@ -31,18 +31,25 @@ class AirportApiClient {
       throw Exception("Status code: ${response.statusCode}");
     }
   }
+
   Future<Flights> fetchFlights(String inboundCity, String outboundCity,
       String outboundDate, String inboundDate) async {
+    print("inboundCity API : $inboundCity ");
+    print("outboundCity API: $outboundCity ");
+    print("inboundDate API : $inboundDate ");
+    print("outboundDate API : $outboundDate ");
     try {
       if (inboundDate != null && outboundDate != null) {
+        print("outboundCity API : $outboundCity");
         final response = await http.get(
             "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/TR/TRY/tur/$inboundCity/$outboundCity/$inboundDate/$outboundDate?apikey=prtl6749387986743898559646983194",
             headers: _skyscannerHeaders);
         if (response.statusCode == 200) {
+          print(" RESPONSE BODY : ${response.body}");
           return Flights.fromJson(jsonDecode(response.body));
         } else {
           throw Exception("Failed to fetch flight ${response.statusCode}");
-        } 
+        }
       } else {
         final response = await http.get(
             "http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/TR/TRY/tur/$inboundCity/$outboundCity/anytime/anytime?apikey=prtl6749387986743898559646983194",
@@ -57,6 +64,7 @@ class AirportApiClient {
       print("Failed to fetch flight $e");
     }
   }
+
   Future<Airport> fetchAirport(String city) async {
     try {
       final response = await http.get(

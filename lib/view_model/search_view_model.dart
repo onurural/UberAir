@@ -36,7 +36,7 @@ class SearchViewModel with ChangeNotifier {
     prefs.setString(
         "inboundCity", airportIDFrom.substring(0, airportIDFrom.length - 4));
     prefs.setString("inboundCityName", inboundCity);
-   
+
     notifyListeners();
   }
 
@@ -44,6 +44,7 @@ class SearchViewModel with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
         "outboundCity", airportIDTo.substring(0, airportIDTo.length - 4));
+    print("outbound city güncellendi set ");
     prefs.setString("outboundCityName", outboundCity);
 
     notifyListeners();

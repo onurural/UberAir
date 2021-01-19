@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
+import 'package:uberAir/widget/home_screen.dart';
 
 String _nameSurname;
 String _email;
@@ -183,6 +184,8 @@ class SignUpWidget extends StatelessWidget {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
+                                   Navigator.pop(context,
+                      MaterialPageRoute(builder: (context) => MyFlightInfoField()));
                               }
                             },
                             elevation: 10,

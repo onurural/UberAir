@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:uberAir/models/airport.dart';
 import 'package:uberAir/models/places.dart';
 import 'package:uberAir/view_model/airport_view_model.dart';
+import 'package:uberAir/view_model/search_view_model.dart';
 
 class SearchAirports extends SearchDelegate<Place> {
   @override
@@ -57,8 +58,9 @@ class SearchAirports extends SearchDelegate<Place> {
                         trailing: Icon(Icons.flight_takeoff,
                             color: Colors.blueAccent),
                         onTap: () {
-                         var value =
-                              snapshot.data.places[index] ;
+                          context.read<SearchViewModel>().setupFrom();
+                          context.read<SearchViewModel>().setupTo();
+                          var value = snapshot.data.places[index];
                           close(context, value);
                         });
                   },
@@ -104,8 +106,7 @@ class SearchAirports extends SearchDelegate<Place> {
                         trailing: Icon(Icons.flight_takeoff,
                             color: Colors.blueAccent),
                         onTap: () {
-                         var value =
-                              snapshot.data.places[index] ;
+                          var value = snapshot.data.places[index];
                           close(context, value);
                         });
                   },
