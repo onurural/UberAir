@@ -88,8 +88,7 @@ class FligthScreen extends StatelessWidget {
               ])),
         ),
         body: Container(child: Consumer<AirportViewModel>(
-            builder: (BuildContext context, item, child) {
-          
+            builder: (BuildContext context, item, child) {         
           Future<Flights> fligths = item.getFlights();
           return FutureBuilder<Flights>(
               future: fligths,

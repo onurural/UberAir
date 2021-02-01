@@ -129,8 +129,9 @@ class MyFlightInfoField extends StatelessWidget {
             ),
           ),
           Expanded(
+            flex: 1,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Consumer<SearchViewModel>(builder: (context, item, child) {
                   return FlatButton(
@@ -146,12 +147,15 @@ class MyFlightInfoField extends StatelessWidget {
                             future: _getInboundAirport(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
-                              return Text(
-                                snapshot.data != null
-                                    ? "${snapshot.data}"
-                                    : "Select Airport",
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.w400),
+                              return FittedBox(
+                                fit: BoxFit.fitWidth,
+                                                              child: Text(
+                                  snapshot.data != null
+                                      ? "${snapshot.data}"
+                                      : "Select Airport",
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.w400),
+                                ),
                               );
                             },
                           ),
@@ -161,12 +165,16 @@ class MyFlightInfoField extends StatelessWidget {
                             future: _getInboundCityName(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
-                              return Text(
-                                snapshot.data != null
-                                    ? "${snapshot.data}"
-                                    : "Select Airport",
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.w400),
+                              return FittedBox(
+                                fit:BoxFit.fitWidth,
+                                
+                                                              child: Text(
+                                  snapshot.data != null
+                                      ? "${snapshot.data}"
+                                      : "Select Airport",
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.w400),
+                                ),
                               );
                             },
                           ),
@@ -193,12 +201,15 @@ class MyFlightInfoField extends StatelessWidget {
                             future: _getOutboundAirport(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
-                              return Text(
-                                snapshot.data != null
-                                    ? "${snapshot.data} "
-                                    : "Select Airport",
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w400),
+                              return FittedBox(
+                                fit: BoxFit.scaleDown,
+                                                              child: Text(
+                                  snapshot.data != null
+                                      ? "${snapshot.data} "
+                                      : "Select Airport",
+                                  style: TextStyle(
+                                      fontSize: 22, fontWeight: FontWeight.w400),
+                                ),
                               );
                             },
                           ),
@@ -209,12 +220,15 @@ class MyFlightInfoField extends StatelessWidget {
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               print("outbound name güncellendi");
-                              return Text(
-                                snapshot.data != null
-                                    ? "${snapshot.data} "
-                                    : "",
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w400),
+                              return  FittedBox(
+                                fit: BoxFit.scaleDown,
+                                                              child: Text(
+                                  snapshot.data != null
+                                      ? "${snapshot.data} "
+                                      : "",
+                                  style: TextStyle(
+                                      fontSize: 22, fontWeight: FontWeight.w400),
+                                ),
                               );
                             },
                           ),

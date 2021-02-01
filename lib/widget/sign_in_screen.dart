@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 import 'package:uberAir/widget/home_screen.dart';
@@ -92,6 +93,14 @@ class SignInWidget extends StatelessWidget {
                                 side: BorderSide(color: Colors.black)),
                             child: Text("Sign in"),
                             onPressed: () {
+                              Fluttertoast.showToast(
+                                    msg:
+                                        "We send you a link to your mail adress please verify",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
                               context
                                   .read<AuthenticationViewModel>()
                                   .signIn(_email, _password);
