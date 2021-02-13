@@ -18,6 +18,7 @@ class MyFlightInfoField extends StatelessWidget {
   Widget build(BuildContext context) {
     return (Container(
       padding: EdgeInsets.all(20),
+      
       child: Column(
         children: [
           MyAppBar(),
@@ -131,7 +132,8 @@ class MyFlightInfoField extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Consumer<SearchViewModel>(builder: (context, item, child) {
                   return FlatButton(
@@ -142,38 +144,41 @@ class MyFlightInfoField extends StatelessWidget {
                     },
                     child: Column(
                       children: [
-                        Expanded(
-                          child: FutureBuilder<String>(
+                        
+                          
+                          FutureBuilder<String>(
                             future: _getInboundAirport(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               return FittedBox(
-                                fit: BoxFit.fitWidth,
+                                fit: BoxFit.scaleDown,
                                                               child: Text(
                                   snapshot.data != null
                                       ? "${snapshot.data}"
                                       : "Select Airport",
                                   style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.w400),
+                                      fontSize: 20, fontWeight: FontWeight.w500),
                                 ),
                               );
                             },
                           ),
-                        ),
+                        
                         Expanded(
+                          
                           child: FutureBuilder<String>(
                             future: _getInboundCityName(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               return FittedBox(
-                                fit:BoxFit.fitWidth,
+                                
+                                fit:BoxFit.scaleDown,
                                 
                                                               child: Text(
                                   snapshot.data != null
                                       ? "${snapshot.data}"
                                       : "Select Airport",
                                   style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.w400),
+                                      fontSize: 15, fontWeight: FontWeight.w400),
                                 ),
                               );
                             },
@@ -184,56 +189,63 @@ class MyFlightInfoField extends StatelessWidget {
                   );
                 }),
                 Icon(
-                  Icons.flight,
-                  color: Colors.amberAccent,
-                ),
+                      
+                      Icons.flight,
+                      color: Colors.amberAccent,
+                    ),
+                
+                
                 Consumer<SearchViewModel>(builder: (context, item, child) {
-                  return FlatButton(
-                    onPressed: () {
-                      context
-                          .read<SearchViewModel>()
-                          .searchNPrintResultOutbound(context);
-                    },
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: FutureBuilder<String>(
-                            future: _getOutboundAirport(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              return FittedBox(
-                                fit: BoxFit.scaleDown,
-                                                              child: Text(
-                                  snapshot.data != null
-                                      ? "${snapshot.data} "
-                                      : "Select Airport",
-                                  style: TextStyle(
-                                      fontSize: 22, fontWeight: FontWeight.w400),
-                                ),
-                              );
-                            },
+                  return Container(
+                    child: FlatButton(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.all(0),
+                      onPressed: () {
+                        context
+                            .read<SearchViewModel>()
+                            .searchNPrintResultOutbound(context);
+                      },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: FutureBuilder<String>(
+                              future: _getOutboundAirport(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                return FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                                                child: Text(
+                                    snapshot.data != null
+                                        ? "${snapshot.data} "
+                                        : "Select Airport",
+                                    style: TextStyle(
+                                        fontSize: 20, fontWeight: FontWeight.w500),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: FutureBuilder<String>(
-                            future: _getOutboundCityName(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              print("outbound name güncellendi");
-                              return  FittedBox(
-                                fit: BoxFit.scaleDown,
-                                                              child: Text(
-                                  snapshot.data != null
-                                      ? "${snapshot.data} "
-                                      : "",
-                                  style: TextStyle(
-                                      fontSize: 22, fontWeight: FontWeight.w400),
-                                ),
-                              );
-                            },
+                          Expanded(
+                            child: FutureBuilder<String>(
+                              future: _getOutboundCityName(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                print("outbound name güncellendi");
+                                return  FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                                                child: Text(
+                                    snapshot.data != null
+                                        ? "${snapshot.data} "
+                                        : "",
+                                    style: TextStyle(
+                                        fontSize: 15, fontWeight: FontWeight.w400),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 })

@@ -29,7 +29,7 @@ class FligthScreen extends StatelessWidget {
                           ? "${snapshot.data} "
                           : "Select Airport",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     );
                   },
                 );
@@ -44,7 +44,7 @@ class FligthScreen extends StatelessWidget {
                           ? "${snapshot.data} "
                           : "Select Airport",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     );
                   },
                 );
@@ -128,10 +128,13 @@ class FligthScreen extends StatelessWidget {
                                         ),
                                         Expanded(
                                           flex: 1,
-                                          child: Text(
-                                              "${snapshot.data.carriers[index].name}",
-                                              style: TextStyle(
-                                                  color: Colors.blue)),
+                                          child: Container(
+                                            margin: EdgeInsets.only(left:15),
+                                            child: Text(
+                                                "${snapshot.data.carriers[index].name}",
+                                                style: TextStyle(
+                                                    color: Colors.blue)),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -156,14 +159,17 @@ class FligthScreen extends StatelessWidget {
                                                           context,
                                                       AsyncSnapshot snapshot) {
                                                     return Expanded(
-                                                      flex: 1,
-                                                      child: Text(
-                                                        "${snapshot.data}",
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
+                                                      flex: 2,
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(left: 8),
+                                                        child: Text(
+                                                          "${snapshot.data}",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -183,13 +189,16 @@ class FligthScreen extends StatelessWidget {
                                                       AsyncSnapshot snapshot) {
                                                     return Expanded(
                                                       flex: 2,
-                                                      child: Text(
-                                                        "${snapshot.data}",
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(left:8),
+                                                        child: Text(
+                                                          "${snapshot.data}",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
                                                       ),
                                                     );
                                                   },

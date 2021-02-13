@@ -64,6 +64,7 @@ flutter:
     - assets/plane.jpg
     - assets/loading_bg.jpg
     - assets/splash_bg.jpg
+    - assets/aboutus_bg.png
 
   #   - images/a_dot_ham.jpeg
 
