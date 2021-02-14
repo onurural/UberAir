@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 import 'package:uberAir/widget/home_screen.dart';
+import 'package:uberAir/widget/upload_ticket_screen.dart';
 import 'package:uberAir/widget/privacy_policy.dart';
 import 'package:uberAir/widget/sign_in_screen.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -49,8 +50,8 @@ class MyDrawer extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     border: Border(
-                      top: BorderSide(width: 0.5, color: Colors.black),
-                      bottom: BorderSide(width: 0.5, color: Colors.black),
+                      top: BorderSide(width: 0.5, color: Colors.black38),
+                      bottom: BorderSide(width: 0.5, color: Colors.black38),
                     ),
                   ),
                   child: ListTile(
@@ -62,6 +63,25 @@ class MyDrawer extends StatelessWidget {
                     },
                     title:
                         Text('Sign Up', style: TextStyle(color: Colors.black)),
+                    trailing: Icon(Icons.chevron_right),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: 0.5, color: Colors.black12),
+                      bottom: BorderSide(width: 0.5, color: Colors.black12),
+                    ),
+                  ),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TicketUploadScreen()));
+                    },
+                    title:
+                        Text('My Tickets', style: TextStyle(color: Colors.black)),
                     trailing: Icon(Icons.chevron_right),
                   ),
                 ),

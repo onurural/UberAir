@@ -19,6 +19,11 @@ class AirportViewModel with ChangeNotifier {
     _state = AirportState.InitialAirportState;
   }
   bool isPressed = false;
+  bool isPop = false;
+   onPop() {
+    isPop = !isPop;
+    notifyListeners();
+  }
   onPressed() {
     isPressed = !isPressed;
     notifyListeners();
@@ -50,10 +55,10 @@ class AirportViewModel with ChangeNotifier {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       inboundCity = prefs.getString("inboundCity");
-      
+
       print("İnboundCity : $inboundCity");
       outboundCity = prefs.getString("outboundCity");
-      
+
       print("outboundCity : $outboundCity");
       outboundDate = prefs.getString("outboundDate");
       print("outboundDate  : $outboundDate");
@@ -61,34 +66,33 @@ class AirportViewModel with ChangeNotifier {
       inboundDate = prefs.getString("inboundDate");
       print("inboundDate : $inboundDate");
       inboundDate = inboundDate.substring(0, 10);
-      
     } catch (e) {
       print("get Flights error: $e");
     }
   }
+
   Future<Flights> getFlights() async {
-    
     String inboundCity;
     String outboundCity;
     String inboundDate;
     String outboundDate;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-      inboundCity = prefs.getString("inboundCity");
-      
-      print("İnboundCity : $inboundCity");
-      outboundCity = prefs.getString("outboundCity");
-      
-      print("outboundCity : $outboundCity");
-      outboundDate = prefs.getString("outboundDate");
-      print("outboundDate  : $outboundDate");
-      outboundDate = outboundDate.substring(0, 10);
-      inboundDate = prefs.getString("inboundDate");
-      print("inboundDate : $inboundDate");
-      inboundDate = inboundDate.substring(0, 10);
-   
-      _flight = await _airportApiClient.fetchFlights(
-          inboundCity, outboundCity, outboundDate, inboundDate);
+    inboundCity = prefs.getString("inboundCity");
 
-      return _flight;
+    print("İnboundCity : $inboundCity");
+    outboundCity = prefs.getString("outboundCity");
+
+    print("outboundCity : $outboundCity");
+    outboundDate = prefs.getString("outboundDate");
+    print("outboundDate  : $outboundDate");
+    outboundDate = outboundDate.substring(0, 10);
+    inboundDate = prefs.getString("inboundDate");
+    print("inboundDate : $inboundDate");
+    inboundDate = inboundDate.substring(0, 10);
+
+    _flight = await _airportApiClient.fetchFlights(
+        inboundCity, outboundCity, outboundDate, inboundDate);
+
+    return _flight;
   }
 }

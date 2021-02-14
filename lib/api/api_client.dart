@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:uberAir/models/airport.dart';
 import 'package:http/http.dart' as http;
 import 'package:uberAir/models/flight.dart';
@@ -25,7 +26,7 @@ class AirportApiClient {
         "http://partners.api.skyscanner.net/apiservices/browseroutes/v1.0/FR/eur/en-US/us/anywhere/anytime/anytime?apikey=prtl6749387986743898559646983194",
         headers: _skyscannerHeaders);
     if (response.statusCode == 200) {
-      print("${response.body}");
+      debugPrint("${response.body}");
       return Flights.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Status code: ${response.statusCode}");
@@ -70,7 +71,9 @@ class AirportApiClient {
       final response = await http.get(
           "https://rapidapi.p.rapidapi.com/apiservices/autosuggest/v1.0/TR/TRY/tur/?query=$city",
           headers: _rapidAPIheaders);
+      print("${response.statusCode}");
       if (response.statusCode == 200) {
+        print("${response.body}");
         return Airport.fromJson(jsonDecode(response.body));
       } else {
         throw Exception("Failed to fetch airports");
