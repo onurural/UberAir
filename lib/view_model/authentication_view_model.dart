@@ -8,8 +8,9 @@ class AuthenticationViewModel with ChangeNotifier {
 
   Stream<User> get authState => _firebaseAuth.idTokenChanges();
 
-   bool isLogedIn()  {
-    if ( _firebaseAuth.currentUser != null) {
+  bool isLogedIn() {
+    if (_firebaseAuth.currentUser != null) {
+     
       return true;
     } else {
       return false;

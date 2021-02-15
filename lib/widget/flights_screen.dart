@@ -103,8 +103,14 @@ class FligthScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           child: InkWell(
-                            onTap: () {
-                              _launchURL().then((value) {
+                            onTap: () async {
+                              String _carrierName =
+                                  snapshot.data.carriers[index].name;
+                              String _tmpUrl = await _getUrl(_carrierName);
+                              _tmpUrl = _tmpUrl.substring(0,_tmpUrl.length-1);
+                              String _url = 'https:$_tmpUrl';
+                              debugPrint("URL $_url");
+                              _launchURL(_url).then((value) {
                                 _showAlertDialog(context);
                               });
                             },
@@ -274,18 +280,16 @@ class FligthScreen extends StatelessWidget {
                 child: Text("Yes")),
             FlatButton(
                 onPressed: () {
-               
                   Navigator.of(context).pop();
                 },
                 child: Text("No")),
           ],
         ),
       );
-   _launchURL() async {
+  _launchURL(String url) async {
     try {
-      var url = "https://www.flypgs.com/";
       if (await canLaunch(url)) {
-        await launch(url, forceWebView: true);
+        await launch(url, forceWebView: false,enableJavaScript: true);
       } else {
         print("cant launch URL");
       }
@@ -293,12 +297,11 @@ class FligthScreen extends StatelessWidget {
       print("error on launch url $e");
     }
   }
-  
 
   _getUrl(String carrirerName) async {
     var url = await Database().fetchURLfromDB(carrirerName);
-    print("URL $url");
-    return url;
+    String urlString = url.data().toString().split(':')[2];
+    return urlString;
   }
 
   Future<String> _getOutboundCityName() async {

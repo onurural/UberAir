@@ -66,71 +66,40 @@ class MyDrawer extends StatelessWidget {
                     trailing: Icon(Icons.chevron_right),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(width: 0.5, color: Colors.black12),
-                      bottom: BorderSide(width: 0.5, color: Colors.black12),
-                    ),
-                  ),
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TicketUploadScreen()));
-                    },
-                    title:
-                        Text('My Tickets', style: TextStyle(color: Colors.black)),
-                    trailing: Icon(Icons.chevron_right),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(width: 0.5, color: Colors.black),
-                  )),
-                  child: ListTile(
-                    onTap: () {},
-                    title: Text('Flights',
-                        style: TextStyle(
-                          color: Colors.black,
-                        )),
-                    trailing: Icon(Icons.chevron_right),
-                  ),
-                ),
+                Provider.of<AuthenticationViewModel>(context).isLogedIn()?_myTicketWidget(context):Container(),
                 Row(
-                children: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PrivacyPolicy()));
-                      },
-                      child: Text("Privacy Policy")),
-                ],
-              ),
-              Divider(
-                color: Colors.black,
-                thickness: 1,
-              ),
-              Row(
-                children: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => AboutUs()));
-                      },
-                      child: Text("About Us")),
-                ],
-              ),
-                buildExpansionTileSettings(context),
+                  children: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PrivacyPolicy()));
+                        },
+                        child: Text("Privacy Policy")),
+                  ],
+                ),
                 Divider(
                   color: Colors.black,
                   thickness: 1,
                 ),
-               
+                Row(
+                  children: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AboutUs()));
+                        },
+                        child: Text("About Us")),
+                  ],
+                ),
+                Provider.of<AuthenticationViewModel>(context).isLogedIn()?buildExpansionTileSettings(context):Container(),
+                Divider(
+                  color: Colors.black,
+                  thickness: 1,
+                ),
               ],
             )),
       ),
@@ -220,20 +189,20 @@ class MyDrawer extends StatelessWidget {
                       child: Text("Change Email")),
                 ],
               ),
-               RaisedButton(
-                  color: Colors.red,
-                  onPressed: () {
-                    context.read<AuthenticationViewModel>().signOut();
-                    Navigator.pop(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyFlightInfoField()));
-                  },
-                  child: Text('Log Out',
-                      style: TextStyle(
-                        color: Colors.black,
-                      )),
-                ),
+              RaisedButton(
+                color: Colors.red,
+                onPressed: () {
+                  context.read<AuthenticationViewModel>().signOut();
+                  Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyFlightInfoField()));
+                },
+                child: Text('Log Out',
+                    style: TextStyle(
+                      color: Colors.black,
+                    )),
+              ),
             ],
           )
         ],
@@ -285,6 +254,23 @@ class MyDrawer extends StatelessWidget {
       print("Gmail ile giriş hata $e");
     }
   }
+
+  _myTicketWidget(BuildContext context) => Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(width: 0.5, color: Colors.black12),
+            bottom: BorderSide(width: 0.5, color: Colors.black12),
+          ),
+        ),
+        child: ListTile(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TicketUploadScreen()));
+          },
+          title: Text('My Tickets', style: TextStyle(color: Colors.black)),
+          trailing: Icon(Icons.chevron_right),
+        ),
+      );
 }
 
 class BuildDrawerHeader extends StatelessWidget {

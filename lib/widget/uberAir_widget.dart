@@ -16,7 +16,8 @@ class UberAir extends StatelessWidget {
         backgroundColor: Colors.transparent,
         drawer: MyDrawer(),
         body: Center(
-          child: MyFlightInfoField(),
+          
+          child: Expanded(child: MyFlightInfoField()),
         ),
       ),
     );
